@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TaskMate.Models\TaskMate.Models.csproj" />
+  </ItemGroup>
+
 </Project>
