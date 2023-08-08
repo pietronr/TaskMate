@@ -11,6 +11,7 @@ namespace TaskMate.ViewModels.Tasks
             if (initialze)
             {
                 NewTaskCommand = new RelayCommand(NewTask);
+                AddTaskCommand = new RelayCommand(AddTask);
             }
         } 
 
@@ -28,13 +29,22 @@ namespace TaskMate.ViewModels.Tasks
             set => Set(ref _currentTask, value);
         }
 
+        private bool _isCreating;
+        public bool IsCreating
+        {
+            get => _isCreating;
+            set => Set(ref _isCreating, value);
+        }
+
         public ObservableCollection<MyTaskViewModel> MyTasksList { get; set; } = new ObservableCollection<MyTaskViewModel>();
 
         #endregion
 
         #region Commands
 
-        public ICommand? NewTaskCommand { get; set; }
+        public ICommand? NewTaskCommand { get; set; }   
+
+        public ICommand? AddTaskCommand { get; set; }
 
         #endregion
 
@@ -42,9 +52,15 @@ namespace TaskMate.ViewModels.Tasks
 
         public void NewTask()
         {
+            IsCreating = true;
+        }
+
+        public void AddTask()
+        {
             MyTasksList.Add(CurrentTask!);
             MyTasksList.RefreshCollection();
             CurrentTask = new MyTaskViewModel();
+            IsCreating = false;
         }
 
         #endregion
