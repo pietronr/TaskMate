@@ -21,6 +21,7 @@ namespace TaskMate.ViewModels.Tasks
                 EditTaskCommand = new AsyncRelayCommand<MyTaskViewModel>(EditTask);
                 RemoveTaskCommand = new RelayCommand<MyTaskViewModel>(RemoveTask);
                 CompleteTaskCommand = new RelayCommand<MyTaskViewModel>(CompleteTask);
+                ShowTaskToDosCommand = new RelayCommand<MyTaskViewModel>(ShowTaskToDos);
             }
         } 
 
@@ -60,6 +61,8 @@ namespace TaskMate.ViewModels.Tasks
 
         public ICommand? CompleteTaskCommand { get;set; }   
 
+        public ICommand? ShowTaskToDosCommand { get; set; }
+
         #endregion
 
         #region Methods
@@ -93,6 +96,11 @@ namespace TaskMate.ViewModels.Tasks
         private void CompleteTask(MyTaskViewModel task)
         {
             task.IsCompleted = true;
+        }
+
+        private void ShowTaskToDos(MyTaskViewModel task)
+        {
+            task.ShowToDos = !task.ShowToDos;
         }
 
         #endregion

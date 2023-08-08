@@ -37,7 +37,7 @@
                 <TextBlock Grid.Row="0" Style="{StaticResource Body}" Text="{Binding Title, FallbackValue='Título tarefa'}" Margin="0 0 0 4"/>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <TextBlock Style="{StaticResource Metadata}" Text="{Binding Description, FallbackValue='Tarefa da faculdade'}" Margin="0 0 16 0"/>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="0 0 16 0">
                         <TextBlock Text="&#xE787;" Margin="0 3 4 0">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SmallIcon}">
@@ -63,6 +63,11 @@
                             </TextBlock.Style>
                         </TextBlock>
                     </StackPanel>
+                    <Button Style="{StaticResource TransparentButton}" ToolTip="Mostrar TO-DO's" Margin="0 -3 0 0"
+                            Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.ShowTaskToDosCommand}" CommandParameter="{Binding}">
+                        <TextBlock Style="{StaticResource Metadata}" Text="{Binding ToDos.Count, StringFormat='{}{0:N0} to-do(s)'}"
+                                   Foreground="DarkBlue" TextDecorations="Underline"/>
+                    </Button>
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1" Background="Transparent">
@@ -70,7 +75,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0">
+                <Grid Grid.Row="0">
                     <StackPanel Orientation="Horizontal" Background="Transparent"
                                 Visibility="{Binding IsCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" ToolTip="Concluir tarefa"
@@ -86,13 +91,13 @@
                             <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE107;" Foreground="Red"/>
                         </Button>
                     </StackPanel>
-                    <Border Grid.Row="1" VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" 
+                    <Border VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" 
                             BorderBrush="Green" BorderThickness="2" Margin="0 0 0 8"
                             Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Style="{StaticResource Tagline}" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                    Margin="0 -1 0 0" Text="CONCLUÍDA" Foreground="Green"/>
                     </Border>
-                </StackPanel>
+                </Grid>
                 <Border Grid.Row="1" VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" BorderThickness="2">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">

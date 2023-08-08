@@ -182,6 +182,13 @@ namespace TaskMate.ViewModels.Tasks
             set => Set(ref _currentToDo, value);
         }
 
+        private bool? _showToDos;
+        public bool? ShowToDos
+        {
+            get => _showToDos;
+            set => Set(ref _showToDos, value);
+        }
+
         #endregion
 
         #region Commands
