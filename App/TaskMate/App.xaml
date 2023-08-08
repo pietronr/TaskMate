@@ -45,6 +45,24 @@
                 <Setter Property="Foreground" Value="Black"/>
             </Style>
 
+            <Style x:Key="Tagline" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="LineHeight" Value="12"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+            
+            <Style x:Key="Icon" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="LineHeight" Value="16"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
             <Style x:Key="CustomDialogStyle" BasedOn="{StaticResource {x:Type dialogs:BaseMetroDialog}}" TargetType="{x:Type dialogs:CustomDialog}">
                 <Setter Property="UseLayoutRounding" Value="True"/>
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
