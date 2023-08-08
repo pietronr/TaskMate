@@ -27,12 +27,20 @@ namespace TaskMate.ViewModels.Tasks
 
         public MyTaskListViewModel() : this(true)
         {
+            ObservableCollection<ToDoViewModel> todos = new()
+            {
+                new ToDoViewModel("Finalizar projeto"),
+                new ToDoViewModel("Preparar apresentação")
+            };
+
             MyTaskViewModel firstTask = new()
             {
                 Title = "Tarefa UFG",
                 Description = "Projeto de Arquitetura de Software",
                 DueDate = new(2023, 9, 10, 10, 10, 10, DateTimeKind.Utc),
-                Priority = TaskPriority.High
+                Priority = TaskPriority.High,
+                ShowToDos = false,
+                ToDos = todos,
             };
 
             TasksList.Add(firstTask);
@@ -100,7 +108,10 @@ namespace TaskMate.ViewModels.Tasks
 
         private void ShowTaskToDos(MyTaskViewModel task)
         {
-            task.ShowToDos = !task.ShowToDos;
+            if (task.ToDos.Count > 0)
+            {
+                task.ShowToDos = !task.ShowToDos;
+            }
         }
 
         #endregion
