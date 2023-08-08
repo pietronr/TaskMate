@@ -1,17 +1,20 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using TaskMate.ViewModels.Helpers;
+using TaskMate.Views.Dialogs;
 
 namespace TaskMate.ViewModels.Tasks
 {
     public class MyTaskListViewModel : BindableBase
     {
+        protected Surfaces.DialogManager? dialogManager;
+
         public MyTaskListViewModel(bool initialze)
         {
             if (initialze)
             {
-                NewTaskCommand = new RelayCommand(NewTask);
-                AddTaskCommand = new RelayCommand(AddTask);
+                dialogManager = new Surfaces.DialogManager();
+                NewTaskCommand = new AsyncRelayCommand(NewTask);
             }
         } 
 
@@ -36,7 +39,7 @@ namespace TaskMate.ViewModels.Tasks
             set => Set(ref _isCreating, value);
         }
 
-        public ObservableCollection<MyTaskViewModel> MyTasksList { get; set; } = new ObservableCollection<MyTaskViewModel>();
+        public ObservableCollection<MyTaskViewModel> TasksList { get; set; } = new ObservableCollection<MyTaskViewModel>();
 
         #endregion
 
@@ -44,23 +47,13 @@ namespace TaskMate.ViewModels.Tasks
 
         public ICommand? NewTaskCommand { get; set; }   
 
-        public ICommand? AddTaskCommand { get; set; }
-
         #endregion
 
         #region Methods
 
-        public void NewTask()
+        public async Task NewTask()
         {
-            IsCreating = true;
-        }
-
-        public void AddTask()
-        {
-            MyTasksList.Add(CurrentTask!);
-            MyTasksList.RefreshCollection();
-            CurrentTask = new MyTaskViewModel();
-            IsCreating = false;
+            await dialogManager!.ShowDialogAsync(new MyTaskViewModel(), new MyTasksDialog(), false, false);
         }
 
         #endregion

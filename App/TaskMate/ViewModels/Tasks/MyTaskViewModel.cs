@@ -1,18 +1,63 @@
-﻿using System;
+﻿using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TaskMate.Models.Tasks;
 using TaskMate.Models.Tasks.Enums;
+using TaskMate.Surfaces;
 using TaskMate.ViewModels.Helpers;
 
 namespace TaskMate.ViewModels.Tasks
 {
-    public class MyTaskViewModel : BindableBase
+    public class MyTaskViewModel : BindableBase, IDialogViewModel<MessageDialogResult>
     {
+        #region IDialogViewModel members
+
+        public ICommand? DialogCommand { get; set; }
+        public TaskCompletionSource<MessageDialogResult>? _tcs { get; set; }
+        public Task<MessageDialogResult> DialogTask => _tcs!.Task;
+        public event EventHandler? Closed;
+        public bool IsDialogCommandExecuting { get; set; }
+
+        public async Task OnDialogCommandExecute(MessageDialogResult messageDialogResult)
+        {
+            try
+            {
+                IsDialogCommandExecuting = true;
+
+                if (messageDialogResult == MessageDialogResult.Affirmative)
+                {
+                    if (await CreateTask().ConfigureAwait(false))
+                    {
+                        Close(messageDialogResult);
+                    }
+                }
+                else if (messageDialogResult == MessageDialogResult.Negative)
+                {
+                    Close(messageDialogResult);
+                }
+            }
+            finally
+            {
+                IsDialogCommandExecuting = false;
+            }
+
+            await Task.CompletedTask;
+        }
+
+        public bool CanDialogCommandExecute(MessageDialogResult messageDialogResult) => !IsDialogCommandExecuting;
+
+        #endregion
+
         public MyTaskViewModel(bool initialize)
         {
             if (initialize)
             {
+                _tcs = new TaskCompletionSource<MessageDialogResult>();
+                DialogCommand = new AsyncRelayCommand<MessageDialogResult>(OnDialogCommandExecute, CanDialogCommandExecute);
+                IsDialogCommandExecuting = false;
+
                 AddObservationCommand = new RelayCommand(AddObservation);
             }
         }
@@ -135,6 +180,21 @@ namespace TaskMate.ViewModels.Tasks
             int? count = Observations?.Count;
             Observations!.Add(new Observation($"Item {count + 1}"));
             Observations!.RefreshCollection();
+        }
+
+        public void Close(MessageDialogResult result)
+        {
+            _tcs!.SetResult(result);
+            Closed?.Invoke(this, EventArgs.Empty);
+        }
+
+        public async Task<bool> CreateTask()
+        {
+            App.MainViewModel.MyTasks.TasksList.Add(this);
+            App.MainViewModel.MyTasks.TasksList.RefreshCollection();
+            await Task.CompletedTask;
+
+            return true;
         }
 
         #endregion
