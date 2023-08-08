@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="TaskMate.Views.Components.MyTaskCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:TaskMate.ViewModels.Tasks"
+             xmlns:enum="clr-namespace:TaskMate.Models.Tasks.Enums;assembly=TaskMate.Models"
+             mc:Ignorable="d"
+             d:DesignHeight="60" d:DesignWidth="800">
+    <Border d:DataContext="{d:DesignInstance vm:MyTaskViewModel}" Background="White" CornerRadius="6" Padding="8">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Style="{StaticResource Body}" Text="{Binding Title, FallbackValue='Título tarefa'}" Margin="0 0 0 4"/>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource Metadata}" Text="{Binding Description, FallbackValue='Tarefa da faculdade'}" Margin="0 0 16 0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE787;" Margin="0 3 4 0">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Icon}">
+                                    <Setter Property="Foreground" Value="SlateGray"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsOverdue}" Value="True">
+                                            <Setter Property="Foreground" Value="Red"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text="{Binding DueDate, StringFormat='{}{0:dd/MM/yyyy}', FallbackValue='26/05/2001'}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Metadata}">
+                                    <Setter Property="Foreground" Value="SlateGray"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsOverdue}" Value="True">
+                                            <Setter Property="Foreground" Value="Red"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="1" VerticalAlignment="Bottom" Height="24" CornerRadius="4" Padding="2 0" BorderThickness="2">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Low}">
+                                    <Setter Property="BorderBrush" Value="LawnGreen"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Medium}">
+                                    <Setter Property="BorderBrush" Value="Yellow"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.High}">
+                                    <Setter Property="BorderBrush" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock>
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Tagline}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Low}">
+                                        <Setter Property="Foreground" Value="LawnGreen"/>
+                                        <Setter Property="Text" Value="BAIXA"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Medium}">
+                                        <Setter Property="Foreground" Value="Yellow"/>
+                                        <Setter Property="Text" Value="MÉDIA"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.High}">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                        <Setter Property="Text" Value="ALTA"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

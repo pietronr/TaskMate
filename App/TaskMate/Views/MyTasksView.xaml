@@ -2,12 +2,13 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:components="clr-namespace:TaskMate.Views.Components"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MyTasksView" Language="pt-BR">
 
-    <Border Margin="8" Padding="8" CornerRadius="8" DataContext="{Binding Source={StaticResource MainViewModel}, Path=MyTasks}">
+    <Border Margin="8" Padding="16 12 16 16" CornerRadius="8" DataContext="{Binding Source={StaticResource MainViewModel}, Path=MyTasks}">
         <Border.Background>
             <SolidColorBrush Color="WhiteSmoke" Opacity="0.85"/>
         </Border.Background>
@@ -16,15 +17,36 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Margin="0 0 0 16">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="Minhas tarefas"/>
+                    <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="Minhas tarefas" Margin="0 4 0 0"/>
                     <Button Grid.Column="1" Style="{StaticResource AffirmativeButton}" Content="Nova tarefa" Command="{Binding NewTaskCommand}"/>
                 </Grid>
+            </Grid>
+            <Grid Grid.Row="1" x:Name="list">
+                <ItemsControl ItemsSource="{Binding TasksList}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <components:MyTaskCard Margin="0 0 8 0"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Template>
+                        <ControlTemplate TargetType="ItemsControl">
+                            <ScrollViewer CanContentScroll="True" Focusable="False" VerticalScrollBarVisibility="Hidden" Padding="0 0 24 0">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                </ItemsControl>
             </Grid>
         </Grid>
     </Border>
