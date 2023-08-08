@@ -1,9 +1,11 @@
 ﻿<Application x:Class="TaskMate.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:TaskMate"
+             xmlns:vm="clr-namespace:TaskMate.ViewModels"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <vm:MainViewModel x:Key="MainViewModel"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
