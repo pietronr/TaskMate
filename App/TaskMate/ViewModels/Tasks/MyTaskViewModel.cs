@@ -164,7 +164,7 @@ namespace TaskMate.ViewModels.Tasks
 
         #region View properties
 
-        public ObservableCollection<ToDoViewModel> ToDos { get; private set; } =  new ObservableCollection<ToDoViewModel>();
+        public ObservableCollection<ToDoViewModel> ToDos { get; set; } =  new ObservableCollection<ToDoViewModel>();
 
         public bool? IsOverdue => DueDate < DateTime.Now;
 

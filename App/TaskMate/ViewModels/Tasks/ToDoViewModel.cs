@@ -4,6 +4,11 @@ namespace TaskMate.ViewModels.Tasks
 {
     public class ToDoViewModel : BindableBase
     {
+        public ToDoViewModel(string description)
+        {
+            Model = new ToDo(description);
+        }
+
         public ToDoViewModel(int? count)
         {
             Model = new ToDo($"Item {count}");
