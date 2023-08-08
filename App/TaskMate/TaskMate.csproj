@@ -11,4 +11,9 @@
     <ProjectReference Include="..\TaskMate.Models\TaskMate.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Helpers\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+
 </Project>
