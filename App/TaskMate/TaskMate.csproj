@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Helpers\" />
     <Folder Include="Views\" />
   </ItemGroup>
 
