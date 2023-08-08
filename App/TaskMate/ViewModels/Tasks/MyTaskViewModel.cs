@@ -63,17 +63,23 @@ namespace TaskMate.ViewModels.Tasks
         public MyTaskViewModel() : this(true)
         {
             Model = new MyTask();
+
+            foreach (ToDo todo in Model.ToDos)
+            {
+                ToDos.Add(new ToDoViewModel(todo));
+            }
         }
 
         public MyTaskViewModel(MyTask task) : this(true)
         {
             Model = task;
 
-            ToDos = new ObservableCollection<TaskToDos>();
-
-            foreach (TaskToDos observation in task.Observations)
+            if (task.ToDos.Count > 0)
             {
-                ToDos.Add(observation);
+                foreach (ToDo todo in task.ToDos)
+                {
+                    ToDos.Add(new ToDoViewModel(todo));
+                }
             }
         }
 
@@ -159,7 +165,7 @@ namespace TaskMate.ViewModels.Tasks
 
         #region View properties
 
-        public ObservableCollection<TaskToDos>? ToDos { get; private set; }
+        public ObservableCollection<ToDoViewModel> ToDos { get; private set; } =  new ObservableCollection<ToDoViewModel>();
 
         public bool? IsOverdue => DueDate < DateTime.Now;
 
@@ -183,7 +189,7 @@ namespace TaskMate.ViewModels.Tasks
         private void AddToDo()
         {
             int? count = ToDos?.Count;
-            ToDos!.Add(new TaskToDos($"Item {count + 1}"));
+            ToDos!.Add(new ToDoViewModel(count));
             ToDos!.RefreshCollection();
         }
 
