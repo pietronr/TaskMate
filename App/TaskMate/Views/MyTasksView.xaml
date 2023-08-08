@@ -7,7 +7,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MyTasksView" Language="pt-BR">
 
-    <Border Margin="8" Padding="8" CornerRadius="8">
+    <Border Margin="8" Padding="8" CornerRadius="8" DataContext="{Binding Source={StaticResource MainViewModel}, Path=MyTasks}">
         <Border.Background>
             <SolidColorBrush Color="WhiteSmoke" Opacity="0.85"/>
         </Border.Background>
@@ -17,7 +17,14 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <TextBlock Style="{StaticResource Header}" Text="Minhas tarefas"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="Minhas tarefas"/>
+                    <Button Grid.Column="1" Style="{StaticResource AddButton}" Content="Nova tarefa" Command="{Binding NewTaskCommand}"/>
+                </Grid>
             </Grid>
         </Grid>
     </Border>
