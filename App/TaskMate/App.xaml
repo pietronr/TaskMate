@@ -233,6 +233,7 @@
             <Style x:Key="IconButton" TargetType="{x:Type Button}">
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="Padding" Value="3"/>
+                <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -242,6 +243,21 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+
+            <Style x:Key="EmptyItemsControl" TargetType="{x:Type ItemsControl}">
+                <Style.Triggers>
+                    <Trigger Property="HasItems" Value="false">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <TextBlock Style="{StaticResource Body}" Text="Não há itens disponíveis." 
+                                                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
             
         </ResourceDictionary>

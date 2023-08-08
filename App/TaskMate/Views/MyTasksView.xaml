@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MyTasksView" Language="pt-BR">
 
-    <Border Margin="8" Padding="16 12 16 16" CornerRadius="8" DataContext="{Binding Source={StaticResource MainViewModel}, Path=MyTasks}">
+    <Border Margin="8" Padding="16 12 12 16" CornerRadius="8" DataContext="{Binding Source={StaticResource MainViewModel}, Path=MyTasks}">
         <Border.Background>
             <SolidColorBrush Color="WhiteSmoke" Opacity="0.85"/>
         </Border.Background>
@@ -17,7 +17,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="0 0 0 16">
+            <Grid Grid.Row="0" Margin="0 0 4 16">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -28,10 +28,10 @@
                 </Grid>
             </Grid>
             <Grid Grid.Row="1" x:Name="list">
-                <ItemsControl ItemsSource="{Binding TasksList}">
+                <ItemsControl Style="{StaticResource EmptyItemsControl}" ItemsSource="{Binding TasksList}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <components:MyTaskCard Margin="0 0 8 0"/>
+                            <components:MyTaskCard Margin="0 0 0 8"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
@@ -41,7 +41,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.Template>
                         <ControlTemplate TargetType="ItemsControl">
-                            <ScrollViewer CanContentScroll="True" Focusable="False" VerticalScrollBarVisibility="Hidden" Padding="0 0 24 0">
+                            <ScrollViewer CanContentScroll="True" Focusable="False" VerticalScrollBarVisibility="Auto" Padding="0 0 4 0">
                                 <ItemsPresenter />
                             </ScrollViewer>
                         </ControlTemplate>
