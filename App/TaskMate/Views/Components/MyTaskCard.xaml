@@ -24,7 +24,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE787;" Margin="0 3 4 0">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Icon}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SmallIcon}">
                                     <Setter Property="Foreground" Value="SlateGray"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsOverdue}" Value="True">
@@ -54,6 +54,14 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" DataContext="{Binding Source={StaticResource MainViewModel}, Path=MyTasks}">
+                    <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" Command="{Binding EditTaskCommand}" CommandParameter="{Binding}">
+                        <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE1C2;" Foreground="DodgerBlue"/>
+                    </Button>
+                    <Button Style="{StaticResource IconButton}" Command="{Binding RemoveTaskCommand}" CommandParameter="{Binding}">
+                        <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE107;" Foreground="Red"/>
+                    </Button>
+                </StackPanel>
                 <Border Grid.Row="1" VerticalAlignment="Bottom" Height="24" CornerRadius="4" Padding="2 0" BorderThickness="2">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">

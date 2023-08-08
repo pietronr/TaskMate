@@ -53,8 +53,17 @@
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="Foreground" Value="Black"/>
             </Style>
-            
-            <Style x:Key="Icon" TargetType="{x:Type TextBlock}">
+
+            <Style x:Key="RegularIcon" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="LineHeight" Value="20"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <Style x:Key="SmallIcon" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
                 <Setter Property="FontSize" Value="12"/>
                 <Setter Property="LineHeight" Value="16"/>
@@ -216,6 +225,20 @@
                                                       TextBlock.Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
                                 </Border>
                             </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="IconButton" TargetType="{x:Type Button}">
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="IconBorder" Background="Transparent" CornerRadius="3" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter/>
+                            </Border>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
