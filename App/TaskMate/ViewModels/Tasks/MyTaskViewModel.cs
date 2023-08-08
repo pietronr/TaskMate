@@ -28,7 +28,7 @@ namespace TaskMate.ViewModels.Tasks
 
                 if (messageDialogResult == MessageDialogResult.Affirmative)
                 {
-                    if (await CreateTask().ConfigureAwait(false))
+                    if (await SaveTask().ConfigureAwait(false))
                     {
                         Close(messageDialogResult);
                     }
@@ -42,8 +42,6 @@ namespace TaskMate.ViewModels.Tasks
             {
                 IsDialogCommandExecuting = false;
             }
-
-            await Task.CompletedTask;
         }
 
         public bool CanDialogCommandExecute(MessageDialogResult messageDialogResult) => !IsDialogCommandExecuting;
@@ -58,7 +56,7 @@ namespace TaskMate.ViewModels.Tasks
                 DialogCommand = new AsyncRelayCommand<MessageDialogResult>(OnDialogCommandExecute, CanDialogCommandExecute);
                 IsDialogCommandExecuting = false;
 
-                AddObservationCommand = new RelayCommand(AddObservation);
+                AddToDoCommand = new RelayCommand(AddToDo);
             }
         }
 
@@ -77,8 +75,6 @@ namespace TaskMate.ViewModels.Tasks
             {
                 ToDos.Add(observation);
             }
-
-
         }
 
         #region Model properties
@@ -167,17 +163,24 @@ namespace TaskMate.ViewModels.Tasks
 
         public bool? IsOverdue => DueDate < DateTime.Now;
 
+        private bool? _isInEdit;
+        public bool? IsInEdit
+        {
+            get => _isInEdit;
+            set => Set(ref _isInEdit, value);
+        }
+
         #endregion
 
         #region Commands
 
-        public ICommand? AddObservationCommand { get; set; }
+        public ICommand? AddToDoCommand { get; set; }
 
         #endregion
 
         #region Methods
 
-        public void AddObservation()
+        private void AddToDo()
         {
             int? count = ToDos?.Count;
             ToDos!.Add(new TaskToDos($"Item {count + 1}"));
@@ -190,11 +193,17 @@ namespace TaskMate.ViewModels.Tasks
             Closed?.Invoke(this, EventArgs.Empty);
         }
 
-        public async Task<bool> CreateTask()
+        private async Task<bool> SaveTask()
         {
-            App.MainViewModel.MyTasks.TasksList?.Add(this);
+            if (IsInEdit == false)
+            {
+                App.MainViewModel.MyTasks.TasksList?.Add(this);
+            }
+
             App.MainViewModel.MyTasks.TasksList?.RefreshCollection();
             OnPropertyChanged(nameof(IsOverdue));
+
+            IsInEdit = false;
             await Task.CompletedTask;
 
             return true;
