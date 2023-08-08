@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:TaskMate.ViewModels.Tasks"
              xmlns:enum="clr-namespace:TaskMate.Models.Tasks.Enums;assembly=TaskMate.Models"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:c="clr-namespace:TaskMate.Converters"
              mc:Ignorable="d"
              d:DesignHeight="60" d:DesignWidth="800">
@@ -25,116 +26,191 @@
             </Style>
         </Border.Style>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Style="{StaticResource Body}" Text="{Binding Title, FallbackValue='Título tarefa'}" Margin="0 0 0 4"/>
-                <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource Metadata}" Text="{Binding Description, FallbackValue='Tarefa da faculdade'}" Margin="0 0 16 0"/>
-                    <StackPanel Orientation="Horizontal" Margin="0 0 16 0">
-                        <TextBlock Text="&#xE787;" Margin="0 3 4 0">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SmallIcon}">
-                                    <Setter Property="Foreground" Value="SlateGray"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsOverdue}" Value="True">
-                                            <Setter Property="Foreground" Value="Red"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <TextBlock Text="{Binding DueDate, StringFormat='{}{0:dd/MM/yyyy}', FallbackValue='26/05/2001'}">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Metadata}">
-                                    <Setter Property="Foreground" Value="SlateGray"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsOverdue}" Value="True">
-                                            <Setter Property="Foreground" Value="Red"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </StackPanel>
-                    <Button Style="{StaticResource TransparentButton}" ToolTip="Mostrar TO-DO's" Margin="0 -3 0 0"
-                            Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.ShowTaskToDosCommand}" CommandParameter="{Binding}">
-                        <TextBlock Style="{StaticResource Metadata}" Text="{Binding ToDos.Count, StringFormat='{}{0:N0} to-do(s)'}"
-                                   Foreground="DarkBlue" TextDecorations="Underline"/>
-                    </Button>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Column="1" Background="Transparent">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <StackPanel Orientation="Horizontal" Background="Transparent"
-                                Visibility="{Binding IsCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                        <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" ToolTip="Concluir tarefa"
-                                Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.CompleteTaskCommand}" CommandParameter="{Binding}">
-                            <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE001;" Foreground="Green"/>
-                        </Button>
-                        <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" ToolTip="Editar tarefa" 
-                                Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.EditTaskCommand}" CommandParameter="{Binding}">
-                            <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE1C2;" Foreground="DodgerBlue"/>
-                        </Button>
-                        <Button Style="{StaticResource IconButton}" ToolTip="Apagar tarefa"
-                                Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.RemoveTaskCommand}" CommandParameter="{Binding}">
-                            <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE107;" Foreground="Red"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource Body}" Text="{Binding Title, FallbackValue='Título tarefa'}" Margin="0 0 0 4"/>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource Metadata}" Text="{Binding Description, FallbackValue='Tarefa da faculdade'}" Margin="0 0 16 0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 0 16 0">
+                            <TextBlock Text="&#xE787;" Margin="0 3 4 0">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SmallIcon}">
+                                        <Setter Property="Foreground" Value="SlateGray"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsOverdue}" Value="True">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock Text="{Binding DueDate, StringFormat='{}{0:dd/MM/yyyy}', FallbackValue='26/05/2001'}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Metadata}">
+                                        <Setter Property="Foreground" Value="SlateGray"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsOverdue}" Value="True">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                        <Button Style="{StaticResource TransparentButton}" ToolTip="Mostrar TO-DO's" Margin="0 -3 0 0"
+                                Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.ShowTaskToDosCommand}" CommandParameter="{Binding}">
+                            <TextBlock Style="{StaticResource Metadata}" Text="{Binding ToDos.Count, StringFormat='{}{0:N0} to-do(s)'}"
+                                       Foreground="DarkBlue" TextDecorations="Underline"/>
                         </Button>
                     </StackPanel>
-                    <Border VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" 
-                            BorderBrush="Green" BorderThickness="2" Margin="0 0 0 8"
-                            Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <TextBlock Style="{StaticResource Tagline}" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                   Margin="0 -1 0 0" Text="CONCLUÍDA" Foreground="Green"/>
-                    </Border>
                 </Grid>
-                <Border Grid.Row="1" VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" BorderThickness="2">
-                    <Border.Style>
-                        <Style TargetType="{x:Type Border}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Low}">
-                                    <Setter Property="BorderBrush" Value="LawnGreen"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Medium}">
-                                    <Setter Property="BorderBrush" Value="Orange"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.High}">
-                                    <Setter Property="BorderBrush" Value="Red"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 -1 0 0">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Tagline}">
+                <Grid Grid.Column="1" Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Horizontal" Background="Transparent"
+                                    Visibility="{Binding IsCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" ToolTip="Concluir tarefa"
+                                    Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.CompleteTaskCommand}" CommandParameter="{Binding}">
+                                <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE001;" Foreground="Green"/>
+                            </Button>
+                            <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" ToolTip="Editar tarefa" 
+                                    Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.EditTaskCommand}" CommandParameter="{Binding}">
+                                <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE1C2;" Foreground="DodgerBlue"/>
+                            </Button>
+                            <Button Style="{StaticResource IconButton}" ToolTip="Apagar tarefa"
+                                    Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.RemoveTaskCommand}" CommandParameter="{Binding}">
+                                <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE107;" Foreground="Red"/>
+                            </Button>
+                        </StackPanel>
+                        <Border VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" 
+                                BorderBrush="Green" BorderThickness="2" Margin="0 0 0 8"
+                                Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Style="{StaticResource Tagline}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   Margin="0 -1 0 0" Text="CONCLUÍDA" Foreground="Green"/>
+                        </Border>
+                    </Grid>
+                    <Border Grid.Row="1" VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" BorderThickness="2">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Low}">
-                                        <Setter Property="Foreground" Value="LawnGreen"/>
-                                        <Setter Property="Text" Value="BAIXA"/>
+                                        <Setter Property="BorderBrush" Value="LawnGreen"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Medium}">
-                                        <Setter Property="Foreground" Value="Orange"/>
-                                        <Setter Property="Text" Value="MÉDIA"/>
+                                        <Setter Property="BorderBrush" Value="Orange"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.High}">
-                                        <Setter Property="Foreground" Value="Red"/>
-                                        <Setter Property="Text" Value="ALTA"/>
+                                        <Setter Property="BorderBrush" Value="Red"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Border>
+                        </Border.Style>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 -1 0 0">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Tagline}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Low}">
+                                            <Setter Property="Foreground" Value="LawnGreen"/>
+                                            <Setter Property="Text" Value="BAIXA"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Medium}">
+                                            <Setter Property="Foreground" Value="Orange"/>
+                                            <Setter Property="Text" Value="MÉDIA"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.High}">
+                                            <Setter Property="Foreground" Value="Red"/>
+                                            <Setter Property="Text" Value="ALTA"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" x:Name="todos" Margin="0 8 0 0">
+                <i:Interaction.Triggers>
+                    <i:DataTrigger Binding="{Binding ShowToDos}" Value="True">
+                        <i:ControlStoryboardAction>
+                            <i:ControlStoryboardAction.Storyboard>
+                                <Storyboard>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.Target="{Binding ElementName=todos}">
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Height" Storyboard.Target="{Binding ElementName=todos}">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.025" Value="32"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.050" Value="56"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.075" Value="72"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="84"/>
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.Target="{Binding ElementName=todos}">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </i:ControlStoryboardAction.Storyboard>
+                        </i:ControlStoryboardAction>
+                    </i:DataTrigger>
+                    <i:DataTrigger Binding="{Binding ShowToDos}" Value="False">
+                        <i:ControlStoryboardAction>
+                            <i:ControlStoryboardAction.Storyboard>
+                                <Storyboard>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.Target="{Binding ElementName=todos}">
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="1"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Height" Storyboard.Target="{Binding ElementName=todos}">
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="84"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.125" Value="72"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.150" Value="56"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.175" Value="32"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.Target="{Binding ElementName=todos}">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </i:ControlStoryboardAction.Storyboard>
+                        </i:ControlStoryboardAction>
+                    </i:DataTrigger>
+                </i:Interaction.Triggers>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource Regular}" Text="TO-DO's" Margin="0 0 0 4"/>
+                    <Grid Grid.Row="1">
+                        <ItemsControl ItemsSource="{Binding ToDos}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Height="24">
+                                        <Ellipse Width="8" Height="8" Fill="Gray" Margin="0 -4 4 0"/>
+                                        <TextBlock Style="{StaticResource Metadata}" Text="{Binding Description}" Foreground="Gray" Margin="0 1 4 0"/>
+                                        <CheckBox Height="16" IsChecked="{Binding IsCompleted}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     </Border>
