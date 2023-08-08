@@ -49,20 +49,22 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" Background="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" DataContext="{Binding Source={StaticResource MainViewModel}, Path=MyTasks}">
-                    <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" Command="{Binding EditTaskCommand}" CommandParameter="{Binding}">
+                <StackPanel Orientation="Horizontal" Background="Transparent">
+                    <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" 
+                            Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.EditTaskCommand}" CommandParameter="{Binding}">
                         <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE1C2;" Foreground="DodgerBlue"/>
                     </Button>
-                    <Button Style="{StaticResource IconButton}" Command="{Binding RemoveTaskCommand}" CommandParameter="{Binding}">
+                    <Button Style="{StaticResource IconButton}" 
+                            Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.RemoveTaskCommand}" CommandParameter="{Binding}">
                         <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE107;" Foreground="Red"/>
                     </Button>
                 </StackPanel>
-                <Border Grid.Row="1" VerticalAlignment="Bottom" Height="24" CornerRadius="4" Padding="2 0" BorderThickness="2">
+                <Border Grid.Row="1" VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" BorderThickness="2">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
                             <Style.Triggers>
@@ -70,7 +72,7 @@
                                     <Setter Property="BorderBrush" Value="LawnGreen"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Medium}">
-                                    <Setter Property="BorderBrush" Value="Yellow"/>
+                                    <Setter Property="BorderBrush" Value="Orange"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.High}">
                                     <Setter Property="BorderBrush" Value="Red"/>
@@ -78,7 +80,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 -1 0 0">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Tagline}">
                                 <Style.Triggers>
@@ -87,7 +89,7 @@
                                         <Setter Property="Text" Value="BAIXA"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.Medium}">
-                                        <Setter Property="Foreground" Value="Yellow"/>
+                                        <Setter Property="Foreground" Value="Orange"/>
                                         <Setter Property="Text" Value="MÉDIA"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Priority}" Value="{x:Static enum:TaskPriority.High}">

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TaskMate.ViewModels.Helpers;
 using TaskMate.Views.Dialogs;
+using TaskMate.Models.Tasks.Enums;
 
 namespace TaskMate.ViewModels.Tasks
 {
@@ -11,9 +12,9 @@ namespace TaskMate.ViewModels.Tasks
     {
         protected Surfaces.DialogManager? dialogManager;
 
-        public MyTaskListViewModel(bool initialze)
+        public MyTaskListViewModel(bool initialize)
         {
-            if (initialze)
+            if (initialize)
             {
                 dialogManager = new Surfaces.DialogManager();
                 NewTaskCommand = new AsyncRelayCommand(NewTask);
@@ -24,6 +25,15 @@ namespace TaskMate.ViewModels.Tasks
 
         public MyTaskListViewModel() : this(true)
         {
+            MyTaskViewModel firstTask = new()
+            {
+                Title = "Tarefa UFG",
+                Description = "Projeto de Arquitetura de Software",
+                DueDate = new(2023, 9, 10, 10, 10, 10, DateTimeKind.Utc),
+                Priority = TaskPriority.High
+            };
+
+            TasksList.Add(firstTask);
         }
 
         #region Properties
