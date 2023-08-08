@@ -6,6 +6,42 @@
     <Application.Resources>
         <ResourceDictionary>
             <vm:MainViewModel x:Key="MainViewModel"/>
+
+            <Style x:Key="Header" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="FontSize" Value="17"/>
+                <Setter Property="LineHeight" Value="24"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <Style x:Key="Body" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="LineHeight" Value="20"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+
+            <Style x:Key="Regular" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="LineHeight" Value="20"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+
+            <Style x:Key="Metadata" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="LineHeight" Value="16"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\pietro.roque\source\repos\arquitetura-de-software\App\TaskMate\App.xaml
-11407045341
+2253494587
 
-11-257941769
+11-1105452969
 195-1659672403
-MainWindow.xaml;
+MainWindow.xaml;Views\MyTasksView.xaml;
 
 False
 
