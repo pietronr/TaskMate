@@ -71,11 +71,11 @@ namespace TaskMate.ViewModels.Tasks
         {
             Model = task;
 
-            Observations = new ObservableCollection<Observation>();
+            ToDos = new ObservableCollection<TaskToDos>();
 
-            foreach (Observation observation in task.Observations)
+            foreach (TaskToDos observation in task.Observations)
             {
-                Observations.Add(observation);
+                ToDos.Add(observation);
             }
 
 
@@ -163,7 +163,7 @@ namespace TaskMate.ViewModels.Tasks
 
         #region View properties
 
-        public ObservableCollection<Observation>? Observations { get; private set; }
+        public ObservableCollection<TaskToDos>? ToDos { get; private set; }
 
         #endregion
 
@@ -177,9 +177,9 @@ namespace TaskMate.ViewModels.Tasks
 
         public void AddObservation()
         {
-            int? count = Observations?.Count;
-            Observations!.Add(new Observation($"Item {count + 1}"));
-            Observations!.RefreshCollection();
+            int? count = ToDos?.Count;
+            ToDos!.Add(new TaskToDos($"Item {count + 1}"));
+            ToDos!.RefreshCollection();
         }
 
         public void Close(MessageDialogResult result)

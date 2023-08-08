@@ -12,7 +12,7 @@ namespace TaskMate.Models.Tasks
         public string? Description { get; set; }
         public DateTime DueDate { get; set; }  
         public bool IsCompleted { get; set; }
-        public List<Observation> Observations { get; set; } = new List<Observation>();
+        public List<TaskToDos> Observations { get; set; } = new List<TaskToDos>();
         public TaskPriority Priority { get; set; }
     }
 }

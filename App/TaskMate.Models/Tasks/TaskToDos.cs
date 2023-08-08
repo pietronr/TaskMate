@@ -1,8 +1,8 @@
 ﻿namespace TaskMate.Models.Tasks
 {
-    public struct Observation
+    public struct TaskToDos
     {
-        public Observation(string? description)
+        public TaskToDos(string? description)
         {
             Description = description;
             IsCompleted = false;
