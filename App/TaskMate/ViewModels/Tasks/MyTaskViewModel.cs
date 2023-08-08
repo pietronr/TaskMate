@@ -165,6 +165,8 @@ namespace TaskMate.ViewModels.Tasks
 
         public ObservableCollection<TaskToDos>? ToDos { get; private set; }
 
+        public bool? IsOverdue => DueDate < DateTime.Now;
+
         #endregion
 
         #region Commands
@@ -190,8 +192,9 @@ namespace TaskMate.ViewModels.Tasks
 
         public async Task<bool> CreateTask()
         {
-            App.MainViewModel.MyTasks.TasksList.Add(this);
-            App.MainViewModel.MyTasks.TasksList.RefreshCollection();
+            App.MainViewModel.MyTasks.TasksList?.Add(this);
+            App.MainViewModel.MyTasks.TasksList?.RefreshCollection();
+            OnPropertyChanged(nameof(IsOverdue));
             await Task.CompletedTask;
 
             return true;

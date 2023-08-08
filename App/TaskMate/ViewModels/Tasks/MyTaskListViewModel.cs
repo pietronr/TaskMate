@@ -31,7 +31,7 @@ namespace TaskMate.ViewModels.Tasks
 
         #region Commands
 
-        public ICommand? NewTaskCommand { get; set; }   
+        public ICommand? NewTaskCommand { get; set; }
 
         #endregion
 

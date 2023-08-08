@@ -36,9 +36,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <UniformGrid Rows="3" Columns="2" Width="500" HorizontalAlignment="Left">
+                <UniformGrid Rows="4" Columns="2" Width="500" HorizontalAlignment="Left">
                     <TextBlock Style="{StaticResource Body}" Text="Título:" VerticalAlignment="Center" Margin="0 0 0 8"/>
                     <TextBox Text="{Binding Title}" Width="240" Height="24"/>
+                    <TextBlock Style="{StaticResource Body}" Text="Descrição:" VerticalAlignment="Center" Margin="0 0 0 0"/>
+                    <TextBox Text="{Binding Description}" Width="240" Height="24"/>
                     <TextBlock Style="{StaticResource Body}" Text="Data de conclusão:" VerticalAlignment="Center" Margin="0 0 0 0"/>
                     <DatePicker Width="240" SelectedDate="{Binding DueDate}" Height="24"/>
                     <TextBlock Style="{StaticResource Body}" Text="Prioridade:" VerticalAlignment="Center" Margin="0 0 0 0"/>
