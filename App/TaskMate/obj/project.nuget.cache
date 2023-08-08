@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "MfNXCf0EgK8mN+gyd/N5zy0aHjA2amCTNxz0sYXo8byXhU7YG/cRPOQPHWJfxeyW5d0tMO/TA7QyHYegp4O17g==",
+  "dgSpecHash": "yPOwauldD7NegN7dPsDTCkOUJo1LRld5nFf5DelbWMx+H/kKWVMj/OpIdyTYY70xF31Mj5adrv2YrVdDkHPoTQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\pietro.roque\\source\\repos\\arquitetura-de-software\\App\\TaskMate\\TaskMate.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\pietro.roque\\.nuget\\packages\\controlzex\\4.4.0\\controlzex.4.4.0.nupkg.sha512",
+    "C:\\Users\\pietro.roque\\.nuget\\packages\\mahapps.metro\\2.4.10\\mahapps.metro.2.4.10.nupkg.sha512",
+    "C:\\Users\\pietro.roque\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.19\\microsoft.xaml.behaviors.wpf.1.1.19.nupkg.sha512",
+    "C:\\Users\\pietro.roque\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512"
+  ],
   "logs": []
 }

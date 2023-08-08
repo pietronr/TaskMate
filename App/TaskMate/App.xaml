@@ -2,6 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:TaskMate.ViewModels"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:surfaces="clr-namespace:TaskMate.Surfaces"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -42,6 +44,89 @@
                 <Setter Property="FontWeight" Value="Normal"/>
                 <Setter Property="Foreground" Value="White"/>
             </Style>
+
+            <Style x:Key="CustomDialogStyle" BasedOn="{StaticResource {x:Type dialogs:BaseMetroDialog}}" TargetType="{x:Type dialogs:CustomDialog}">
+                <Setter Property="UseLayoutRounding" Value="True"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
+                <Setter Property="surfaces:DialogExtensions.DialogHostMaxWidth" Value="600"/>
+                <Setter Property="surfaces:DialogExtensions.DialogHostMaxHeight" Value="600"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type dialogs:BaseMetroDialog}">
+                            <ControlTemplate.Resources>
+                                <Storyboard x:Key="DialogShownStoryboard">
+                                    <DoubleAnimation 
+                                            Duration="0"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1" />
+                                    <DoubleAnimation 
+                                            BeginTime="0:0:0"
+                                            Duration="0:0:0.15"
+                                            Storyboard.TargetName="OverlayBrush"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.3" />
+                                    <DoubleAnimation 
+                                            BeginTime="0:0:0.15"
+                                            Duration="0:0:0.2"
+                                            Storyboard.TargetName="DialogContent"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0" To="1" />
+                                    <DoubleAnimation
+                                            BeginTime="0:0:0.15"
+                                            SpeedRatio="2.1"
+                                            Duration="0:0:0.2"
+                                            Storyboard.TargetName="DialogContent"
+                                            Storyboard.TargetProperty="(Grid.LayoutTransform).(ScaleTransform.ScaleX)"
+                                            From="1.06" To="1" />
+                                    <DoubleAnimation
+                                            BeginTime="0:0:0.15"
+                                            Duration="0:0:0.2"
+                                            SpeedRatio="2.1"
+                                            Storyboard.TargetName="DialogContent"
+                                            Storyboard.TargetProperty="(Grid.LayoutTransform).(ScaleTransform.ScaleY)"
+                                            From="1.06" To="1" />
+                                </Storyboard>
+                            </ControlTemplate.Resources>
+                            <Grid>
+                                <Border x:Name="OverlayBrush" Background="Black" Opacity="0"/>
+                                <Grid x:Name="DialogContent" MaxWidth="{TemplateBinding surfaces:DialogExtensions.DialogHostMaxWidth}" 
+                                      Margin="15 30" MaxHeight="{TemplateBinding surfaces:DialogExtensions.DialogHostMaxHeight}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Opacity="0">
+                                    <Grid.LayoutTransform>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    </Grid.LayoutTransform>
+                                    <Border FocusVisualStyle="{x:Null}" Focusable="False" Padding="10" CornerRadius="8"
+                                            Background="{StaticResource BackgroundBrush}">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="32" Opacity="0.4" ShadowDepth="4" Direction="-90"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <ContentPresenter Grid.Row="0" Content="{TemplateBinding DialogTop}"/>
+                                            <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
+                                            <ContentPresenter Grid.Row="2" Content="{TemplateBinding DialogBottom}" />
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+
+                            <ControlTemplate.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard Storyboard="{StaticResource DialogShownStoryboard}" />
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
