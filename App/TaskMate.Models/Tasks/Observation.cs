@@ -3,6 +3,6 @@
     public struct Observation
     {
         public string? Description { get; set; }
-        public bool Completed { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

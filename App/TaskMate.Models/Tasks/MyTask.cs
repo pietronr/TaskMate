@@ -2,15 +2,16 @@
 
 namespace TaskMate.Models.Tasks
 {
-    public class Task
+    public class MyTask
     {
-        public Task()
+        public MyTask()
         {
         }
 
         public string? Title { get; set; }
         public string? Description { get; set; }
-        public bool Completed { get; set; }
+        public DateTime DueDate { get; set; }  
+        public bool IsCompleted { get; set; }
         public List<Observation> Observations { get; set; } = new List<Observation>();
         public TaskPriority Priority { get; set; }
     }
