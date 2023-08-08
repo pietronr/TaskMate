@@ -7,7 +7,7 @@ namespace TaskMate.Surfaces
 {
     public interface IDialogViewModel<TResult>
     {
-        TaskCompletionSource<MessageDialogResult> _tcs { get; set; }
+        TaskCompletionSource<MessageDialogResult>? _tcs { get; set; }
 
         /// <summary>
         /// A task promising the result of the dialog view model. It is completed when <see cref="Close"/> was called.
@@ -20,12 +20,12 @@ namespace TaskMate.Surfaces
         /// <summary>
         /// This event is raised when the dialog was closed.
         /// </summary>
-        event EventHandler Closed;
+        event EventHandler? Closed;
 
         /// <summary>
         /// A command that handles user interaction with the dialog.
         /// </summary>
-        ICommand DialogCommand { get; set; }
+        ICommand? DialogCommand { get; set; }
 
         Task OnDialogCommandExecute(MessageDialogResult messageDialogResult);
 

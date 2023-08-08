@@ -8,9 +8,9 @@ using System.Windows;
 
 namespace TaskMate.Surfaces
 {
-    public static class DialogManager
+    public class DialogManager
     {
-        public static async Task<TResult> ShowDialogAsync<TResult>(IDialogViewModel<TResult> viewModel, object view, bool strechHorizontally = true, bool stretchVertically = false)
+        public async Task<TResult> ShowDialogAsync<TResult>(IDialogViewModel<TResult> viewModel, object view, bool strechHorizontally = true, bool stretchVertically = false)
         {
             if (view is not UserControl dialog)
             {
