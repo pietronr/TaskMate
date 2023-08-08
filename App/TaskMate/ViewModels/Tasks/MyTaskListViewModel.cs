@@ -20,6 +20,7 @@ namespace TaskMate.ViewModels.Tasks
                 NewTaskCommand = new AsyncRelayCommand(NewTask);
                 EditTaskCommand = new AsyncRelayCommand<MyTaskViewModel>(EditTask);
                 RemoveTaskCommand = new RelayCommand<MyTaskViewModel>(RemoveTask);
+                CompleteTaskCommand = new RelayCommand<MyTaskViewModel>(CompleteTask);
             }
         } 
 
@@ -40,8 +41,8 @@ namespace TaskMate.ViewModels.Tasks
 
         public ObservableCollection<MyTaskViewModel> TasksList { get; set; } = new ObservableCollection<MyTaskViewModel>();
 
-        private MyTaskViewModel _currentTask;
-        public MyTaskViewModel CurrentTask
+        private MyTaskViewModel? _currentTask;
+        public MyTaskViewModel? CurrentTask
         {
             get => _currentTask;
             set => Set(ref _currentTask, value);
@@ -56,6 +57,8 @@ namespace TaskMate.ViewModels.Tasks
         public ICommand? EditTaskCommand { get; set; }  
 
         public ICommand? RemoveTaskCommand { get; set; }
+
+        public ICommand? CompleteTaskCommand { get;set; }   
 
         #endregion
 
@@ -85,6 +88,11 @@ namespace TaskMate.ViewModels.Tasks
         {
             TasksList.Remove(task);
             TasksList.RefreshCollection();
+        }
+
+        private void CompleteTask(MyTaskViewModel task)
+        {
+            task.IsCompleted = true;
         }
 
         #endregion

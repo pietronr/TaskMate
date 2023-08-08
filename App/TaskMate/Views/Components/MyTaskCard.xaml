@@ -5,9 +5,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:TaskMate.ViewModels.Tasks"
              xmlns:enum="clr-namespace:TaskMate.Models.Tasks.Enums;assembly=TaskMate.Models"
+             xmlns:c="clr-namespace:TaskMate.Converters"
              mc:Ignorable="d"
              d:DesignHeight="60" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <c:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <c:BoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" ShowIfFalse="True"/>
+    </UserControl.Resources>
+    
     <Border d:DataContext="{d:DesignInstance vm:MyTaskViewModel}" Background="White" CornerRadius="6" Padding="8">
+        <Border.Style>
+            <Style TargetType="{x:Type Border}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                        <Setter Property="Opacity" Value="0.6"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -54,15 +70,28 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" Background="Transparent">
-                    <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" 
-                            Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.EditTaskCommand}" CommandParameter="{Binding}">
-                        <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE1C2;" Foreground="DodgerBlue"/>
-                    </Button>
-                    <Button Style="{StaticResource IconButton}" 
-                            Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.RemoveTaskCommand}" CommandParameter="{Binding}">
-                        <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE107;" Foreground="Red"/>
-                    </Button>
+                <StackPanel Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" Background="Transparent"
+                                Visibility="{Binding IsCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" ToolTip="Concluir tarefa"
+                                Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.CompleteTaskCommand}" CommandParameter="{Binding}">
+                            <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE001;" Foreground="Green"/>
+                        </Button>
+                        <Button Style="{StaticResource IconButton}" Margin="0 0 4 0" ToolTip="Editar tarefa" 
+                                Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.EditTaskCommand}" CommandParameter="{Binding}">
+                            <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE1C2;" Foreground="DodgerBlue"/>
+                        </Button>
+                        <Button Style="{StaticResource IconButton}" ToolTip="Apagar tarefa"
+                                Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.RemoveTaskCommand}" CommandParameter="{Binding}">
+                            <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE107;" Foreground="Red"/>
+                        </Button>
+                    </StackPanel>
+                    <Border Grid.Row="1" VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" 
+                            BorderBrush="Green" BorderThickness="2" Margin="0 0 0 8"
+                            Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <TextBlock Style="{StaticResource Tagline}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   Margin="0 -1 0 0" Text="CONCLUÍDA" Foreground="Green"/>
+                    </Border>
                 </StackPanel>
                 <Border Grid.Row="1" VerticalAlignment="Bottom" CornerRadius="4" Padding="2 0" BorderThickness="2">
                     <Border.Style>
