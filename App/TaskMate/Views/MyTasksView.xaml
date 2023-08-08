@@ -3,11 +3,17 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:c="clr-namespace:TaskMate.Converters"
       xmlns:components="clr-namespace:TaskMate.Views.Components"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MyTasksView" Language="pt-BR">
 
+    <Page.Resources>
+        <c:CountToVisibilityConverter x:Key="CountToVisibilityConverter"/>
+        <c:CountToVisibilityConverter x:Key="InverseCountToVisibilityConverter" ShouldBeEmpty="True"/>
+    </Page.Resources>
+    
     <Border Margin="8" Padding="16 12 12 16" CornerRadius="8" DataContext="{Binding Source={StaticResource MainViewModel}, Path=MyTasks}">
         <Border.Background>
             <SolidColorBrush Color="WhiteSmoke" Opacity="0.85"/>
@@ -27,8 +33,8 @@
                     <Button Grid.Column="1" Style="{StaticResource AffirmativeButton}" Content="Nova tarefa" Command="{Binding NewTaskCommand}"/>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1" x:Name="list">
-                <ItemsControl Style="{StaticResource EmptyItemsControl}" ItemsSource="{Binding TasksList}">
+            <Grid Grid.Row="1" x:Name="list" DataContext="{Binding TasksList}">
+                <ItemsControl Visibility="{Binding Count, Converter={StaticResource CountToVisibilityConverter}}" ItemsSource="{Binding}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <components:MyTaskCard Margin="0 0 0 8"/>
@@ -47,6 +53,12 @@
                         </ControlTemplate>
                     </ItemsControl.Template>
                 </ItemsControl>
+                <StackPanel Visibility="{Binding Count, Converter={StaticResource InverseCountToVisibilityConverter}}"
+                            HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 48 0 0">
+                    <TextBlock Style="{StaticResource BigIcon}" Text="&#xF0B5;" Foreground="Black" Margin="0 0 0 0" HorizontalAlignment="Center"/>
+                    <TextBlock Style="{StaticResource Body}" Text="Não há itens disponíveis. Crie uma nova tarefa." Foreground="Black" 
+                               Margin="0 0 0 4" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Grid>
         </Grid>
     </Border>
