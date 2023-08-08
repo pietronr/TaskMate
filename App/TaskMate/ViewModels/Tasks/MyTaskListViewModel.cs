@@ -40,6 +40,13 @@ namespace TaskMate.ViewModels.Tasks
 
         public ObservableCollection<MyTaskViewModel> TasksList { get; set; } = new ObservableCollection<MyTaskViewModel>();
 
+        private MyTaskViewModel _currentTask;
+        public MyTaskViewModel CurrentTask
+        {
+            get => _currentTask;
+            set => Set(ref _currentTask, value);
+        }
+
         #endregion
 
         #region Commands
@@ -61,12 +68,16 @@ namespace TaskMate.ViewModels.Tasks
                 DueDate = DateTime.Now,
             };
 
+            CurrentTask = newTask;
+
             await dialogManager!.ShowDialogAsync(newTask, new MyTasksDialog(), false, false);
         }
 
         private async Task EditTask(MyTaskViewModel task)
         {
-            task.IsInEdit = true;   
+            task.IsInEdit = true;
+            CurrentTask = task;
+
             await dialogManager!.ShowDialogAsync(task, new MyTasksDialog(), false, false);
         }
 

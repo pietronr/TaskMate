@@ -57,17 +57,16 @@ namespace TaskMate.ViewModels.Tasks
                 IsDialogCommandExecuting = false;
 
                 AddToDoCommand = new RelayCommand(AddToDo);
+                RemoveToDoCommand = new RelayCommand<ToDoViewModel>(RemoveToDo);
             }
         }
 
         public MyTaskViewModel() : this(true)
         {
             Model = new MyTask();
+            IsInEdit = false;
 
-            foreach (ToDo todo in Model.ToDos)
-            {
-                ToDos.Add(new ToDoViewModel(todo));
-            }
+            CurrentToDo = new ToDoViewModel(1);
         }
 
         public MyTaskViewModel(MyTask task) : this(true)
@@ -176,11 +175,20 @@ namespace TaskMate.ViewModels.Tasks
             set => Set(ref _isInEdit, value);
         }
 
+        private ToDoViewModel? _currentToDo;
+        public ToDoViewModel? CurrentToDo
+        {
+            get => _currentToDo;
+            set => Set(ref _currentToDo, value);
+        }
+
         #endregion
 
         #region Commands
 
         public ICommand? AddToDoCommand { get; set; }
+
+        public ICommand? RemoveToDoCommand { get; set; }
 
         #endregion
 
@@ -188,8 +196,15 @@ namespace TaskMate.ViewModels.Tasks
 
         private void AddToDo()
         {
+            ToDos!.Add(CurrentToDo!);
+            ToDos!.RefreshCollection();
             int? count = ToDos?.Count;
-            ToDos!.Add(new ToDoViewModel(count));
+            CurrentToDo = new ToDoViewModel(count + 1);
+        }
+
+        private void RemoveToDo(ToDoViewModel todo)
+        {
+            ToDos!.Remove(todo);
             ToDos!.RefreshCollection();
         }
 
@@ -199,7 +214,7 @@ namespace TaskMate.ViewModels.Tasks
             Closed?.Invoke(this, EventArgs.Empty);
         }
 
-        private async Task<bool> SaveTask()
+        public async Task<bool> SaveTask()
         {
             if (IsInEdit == false)
             {

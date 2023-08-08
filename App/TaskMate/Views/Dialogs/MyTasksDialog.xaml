@@ -35,7 +35,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
+            <StackPanel Grid.Row="0" Margin="0 0 0 8">
                 <UniformGrid Rows="4" Columns="2" Width="500" HorizontalAlignment="Left">
                     <TextBlock Style="{StaticResource Body}" Text="Título:" VerticalAlignment="Center" Margin="0 0 0 8"/>
                     <TextBox Text="{Binding Title}" Width="240" Height="24"/>
@@ -53,6 +53,39 @@
                     </ComboBox>
                 </UniformGrid>
             </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Margin="0">
+                    <TextBlock Style="{StaticResource Body}" Text="To-Do's" Margin="0 0 0 4"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding CurrentToDo.Description}" Width="250" Height="24" Margin="0 0 4 0"/>
+                        <Button Style="{StaticResource IconButton}" Margin="0 3 0 0" VerticalAlignment="Bottom" Command="{Binding AddToDoCommand}">
+                            <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE948;"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding ToDos}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Height="24">
+                                    <StackPanel Orientation="Horizontal" Width="250" Margin="0 0 4 0"> 
+                                        <Ellipse Width="8" Height="8" Fill="Gray" Margin="0 -4 4 0"/>
+                                        <TextBlock Style="{StaticResource Metadata}" Text="{Binding Description}" Foreground="Gray"/>
+                                    </StackPanel>
+                                    <Button Style="{StaticResource IconButton}" 
+                                            Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.CurrentTask.RemoveToDoCommand}" CommandParameter="{Binding}">
+                                        <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE947;" Foreground="Red"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
         </Grid>
         <Grid Grid.Row="2" VerticalAlignment="Bottom">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
