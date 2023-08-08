@@ -23,7 +23,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="Minhas tarefas"/>
-                    <Button Grid.Column="1" Style="{StaticResource AddButton}" Content="Nova tarefa" Command="{Binding NewTaskCommand}"/>
+                    <Button Grid.Column="1" Style="{StaticResource AffirmativeButton}" Content="Nova tarefa" Command="{Binding NewTaskCommand}"/>
                 </Grid>
             </Grid>
         </Grid>
