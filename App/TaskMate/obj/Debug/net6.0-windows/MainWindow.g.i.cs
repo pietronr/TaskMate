@@ -9,6 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -30,6 +31,8 @@ using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Shell;
+using TaskMate.Surfaces;
+using TaskMate.ViewModels;
 
 
 namespace TaskMate {
