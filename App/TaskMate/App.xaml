@@ -24,7 +24,7 @@
                 <Setter Property="LineHeight" Value="20"/>
                 <Setter Property="Margin" Value="0"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="Black"/>
             </Style>
 
             <Style x:Key="Regular" TargetType="{x:Type TextBlock}">
@@ -33,7 +33,7 @@
                 <Setter Property="LineHeight" Value="20"/>
                 <Setter Property="Margin" Value="0"/>
                 <Setter Property="FontWeight" Value="Normal"/>
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="Black"/>
             </Style>
 
             <Style x:Key="Metadata" TargetType="{x:Type TextBlock}">
@@ -42,7 +42,7 @@
                 <Setter Property="LineHeight" Value="16"/>
                 <Setter Property="Margin" Value="0"/>
                 <Setter Property="FontWeight" Value="Normal"/>
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="Black"/>
             </Style>
 
             <Style x:Key="CustomDialogStyle" BasedOn="{StaticResource {x:Type dialogs:BaseMetroDialog}}" TargetType="{x:Type dialogs:CustomDialog}">
@@ -97,7 +97,7 @@
                                         <ScaleTransform ScaleX="1" ScaleY="1"/>
                                     </Grid.LayoutTransform>
                                     <Border FocusVisualStyle="{x:Null}" Focusable="False" Padding="10" CornerRadius="8"
-                                            Background="{StaticResource BackgroundBrush}">
+                                            Background="White">
                                         <Border.Effect>
                                             <DropShadowEffect BlurRadius="32" Opacity="0.4" ShadowDepth="4" Direction="-90"/>
                                         </Border.Effect>
@@ -122,6 +122,44 @@
                                     </EventTrigger.Actions>
                                 </EventTrigger>
                             </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="AddButton" TargetType="{x:Type Button}">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextBlock.LineHeight" Value="20"/>
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Height" Value="32"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Padding" Value="4 2"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <Border x:Name="Border" CornerRadius="4">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="LawnGreen" Opacity="0.6"/>
+                                    </Border.Background>
+                                    <Border.RenderTransform>
+                                        <ScaleTransform x:Name="HeaderTextScaleTransform" ScaleX="1" ScaleY="1" CenterX="0.5" CenterY="0.5" />
+                                    </Border.RenderTransform>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal"/>
+                                            <VisualState x:Name="MouseOver"/>
+                                            <VisualState x:Name="Pressed"/>
+                                            <VisualState x:Name="Disabled"/>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <ContentPresenter x:Name="content" Content="{TemplateBinding Content}" 
+                                                      TextBlock.Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                                </Border>
+                            </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
