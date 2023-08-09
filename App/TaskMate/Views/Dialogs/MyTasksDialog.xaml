@@ -19,6 +19,8 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         <c:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+        <c:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <c:BoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" ShowIfFalse="True"/>
     </UserControl.Resources>
     
     <Grid Margin="16" d:DataContext="{d:DesignInstance vm:MyTaskViewModel}">
@@ -28,7 +30,10 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="0 0 0 16">
-            <TextBlock Style="{StaticResource Header}" Text="Nova tarefa"/>
+            <TextBlock Style="{StaticResource Header}" Text="Nova tarefa"
+                       Visibility="{Binding IsInEdit, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+            <TextBlock Style="{StaticResource Header}" Text="Editar tarefa"
+                       Visibility="{Binding IsInEdit, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </Grid>
         <Grid Grid.Row="1" Margin="0 0 0 16">
             <Grid.RowDefinitions>
