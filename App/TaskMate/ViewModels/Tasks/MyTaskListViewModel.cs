@@ -39,7 +39,6 @@ namespace TaskMate.ViewModels.Tasks
                 Description = "Projeto de Arquitetura de Software",
                 DueDate = new(2023, 9, 10, 10, 10, 10, DateTimeKind.Utc),
                 Priority = TaskPriority.High,
-                ShowToDos = false,
                 ToDos = todos,
             };
 

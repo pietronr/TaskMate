@@ -59,6 +59,8 @@ namespace TaskMate.ViewModels.Tasks
                 AddToDoCommand = new RelayCommand(AddToDo);
                 RemoveToDoCommand = new RelayCommand<ToDoViewModel>(RemoveToDo);
             }
+
+            ShowToDos = false;
         }
 
         public MyTaskViewModel() : this(true)
