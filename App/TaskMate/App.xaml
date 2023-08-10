@@ -7,6 +7,10 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
             <vm:MainViewModel x:Key="MainViewModel"/>
 
             <Style x:Key="Header" TargetType="{x:Type TextBlock}">
