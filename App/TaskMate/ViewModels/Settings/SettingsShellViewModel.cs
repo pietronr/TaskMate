@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using TaskMate.Models.Settings;
 
 namespace TaskMate.ViewModels.Settings
 {
@@ -47,6 +48,15 @@ namespace TaskMate.ViewModels.Settings
 
         private async Task OpenSettings()
         {
+            if (CurrentSettings?.IsNewEntry == false)
+            {
+                UserSettings previous = CurrentSettings.GetFullModel().Duplicate();
+                PreviousSettings = new UserSettingsViewModel(previous);
+            }
+            else
+            {
+
+            }
             //await dialogManager?.ShowDialogAsync(); IMPLEMENTAR 
         }
 

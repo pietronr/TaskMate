@@ -60,11 +60,13 @@ namespace TaskMate.ViewModels.Settings
         public UserSettingsViewModel() : this(true)
         {
             Model = new UserSettings();
+            IsNewEntry = true;
         }
 
         public UserSettingsViewModel(UserSettings model) : this(true)
         {
             Model = model;
+            IsNewEntry = false;
         }
 
         #region Model properties
@@ -76,27 +78,27 @@ namespace TaskMate.ViewModels.Settings
             set => Set(ref _model, value);
         }
 
-        public bool ReceiveNotifications
+        public bool ReceiveReminders
         {
-            get => Model!.ReceiveNotifications;
+            get => Model!.ReceiveReminders;
             set
             {
-                if (Model!.ReceiveNotifications != value)
+                if (Model!.ReceiveReminders != value)
                 {
-                    Model.ReceiveNotifications = value;
+                    Model.ReceiveReminders = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        public int DaysBeforeTaskNotification
+        public int DaysBeforeTaskReminder
         {
-            get => Model!.DaysBeforeTaskNotification;
+            get => Model!.DaysBeforeTaskReminder;
             set
             {
-                if (Model!.DaysBeforeTaskNotification != value)
+                if (Model!.DaysBeforeTaskReminder != value)
                 {
-                    Model.DaysBeforeTaskNotification = value;
+                    Model.DaysBeforeTaskReminder = value;
                     OnPropertyChanged();
                 }
             }
@@ -128,14 +130,14 @@ namespace TaskMate.ViewModels.Settings
             }
         }
 
-        public NotificationType NotificationType
+        public ReminderType ReminderType
         {
-            get => Model!.NotificationType;
+            get => Model!.ReminderType;
             set
             {
-                if (Model!.NotificationType != value)
+                if (Model!.ReminderType != value)
                 {
-                    Model.NotificationType = value;
+                    Model.ReminderType = value;
                     OnPropertyChanged();
                 }
             }
@@ -143,11 +145,12 @@ namespace TaskMate.ViewModels.Settings
 
         #endregion
 
-        #region View properties
-
-        #endregion
-
         #region Methods
+
+        public UserSettings GetFullModel()
+        {
+            return Model!;
+        }
 
         public void Close(MessageDialogResult result)
         {
@@ -155,14 +158,32 @@ namespace TaskMate.ViewModels.Settings
             Closed?.Invoke(this, EventArgs.Empty);
         }
 
-        public Task<bool> SaveAsync()
+        public async Task<bool> SaveAsync()
         {
-            throw new NotImplementedException();
+            App.MainViewModel.UserSettings.CurrentSettings = this;
+            OnPropertyChanged(null);
+
+            await Task.CompletedTask;
+
+            return true;
         }
 
-        public Task<bool> RevertChangesAsync()
+        public async Task<bool> RevertChangesAsync()
         {
-            throw new NotImplementedException();
+            UserSettingsViewModel previous = App.MainViewModel.UserSettings.PreviousSettings!;
+
+            ReceiveReminders = previous.ReceiveReminders;
+            DaysBeforeTaskReminder = previous.DaysBeforeTaskReminder;
+            RemindMeAtDate = previous.RemindMeAtDate;
+            HourOfTheDate = previous.HourOfTheDate;
+            ReminderType = previous.ReminderType;
+
+            IsNewEntry = false;
+            OnPropertyChanged(null);
+
+            await Task.CompletedTask;
+
+            return true;
         }
 
         #endregion
