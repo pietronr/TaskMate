@@ -5,6 +5,13 @@ namespace TaskMate.ViewModels
 {
     public class BindableBase : INotifyPropertyChanged
     {
+        private bool _isNewEntry;
+        public bool IsNewEntry
+        {
+            get => _isNewEntry;
+            set => Set(ref _isNewEntry, value);
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

@@ -42,6 +42,7 @@ namespace TaskMate.ViewModels.Tasks
                 DueDate = new(2023, 9, 10, 10, 10, 10, DateTimeKind.Utc),
                 Priority = TaskPriority.High,
                 ToDos = todos,
+                IsNewEntry = false
             };
 
             TasksList.Add(firstTask);
@@ -97,7 +98,6 @@ namespace TaskMate.ViewModels.Tasks
 
         private async Task EditTask(MyTaskViewModel task)
         {
-            task.IsInEdit = true;
             CurrentTask = task;
 
             MyTask duplicate = task.GetFullModel().Duplicate(task.ToDos.Select(x => x.Model).ToList()!);

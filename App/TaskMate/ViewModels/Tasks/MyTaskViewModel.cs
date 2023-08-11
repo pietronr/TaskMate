@@ -66,7 +66,7 @@ namespace TaskMate.ViewModels.Tasks
         public MyTaskViewModel() : this(true)
         {
             Model = new MyTask();
-            IsInEdit = false;
+            IsNewEntry = true;
 
             CurrentToDo = new ToDoViewModel(1);
         }
@@ -74,6 +74,7 @@ namespace TaskMate.ViewModels.Tasks
         public MyTaskViewModel(MyTask task) : this(true)
         {
             Model = task;
+            IsNewEntry = false;
 
             if (task.ToDos.Count > 0)
             {
@@ -170,13 +171,6 @@ namespace TaskMate.ViewModels.Tasks
 
         public bool? IsOverdue => DueDate < DateTime.Now;
 
-        private bool? _isInEdit;
-        public bool? IsInEdit
-        {
-            get => _isInEdit;
-            set => Set(ref _isInEdit, value);
-        }
-
         private ToDoViewModel? _currentToDo;
         public ToDoViewModel? CurrentToDo
         {
@@ -235,7 +229,7 @@ namespace TaskMate.ViewModels.Tasks
 
         public async Task<bool> SaveAsync()
         {
-            if (IsInEdit == false)
+            if (IsNewEntry)
             {
                 App.MainViewModel.MyTasks.TasksList?.Add(this);
             }
@@ -243,9 +237,9 @@ namespace TaskMate.ViewModels.Tasks
             App.MainViewModel.MyTasks.TasksList?.RefreshCollection();
             OnPropertyChanged(nameof(IsOverdue));
 
-            if (IsInEdit == true && ToDos.Count == 0) ShowToDos = false;
+            if (!IsNewEntry && ToDos.Count == 0) ShowToDos = false;
 
-            IsInEdit = false;
+            IsNewEntry = false;
             await Task.CompletedTask;
 
             return true;
@@ -261,6 +255,8 @@ namespace TaskMate.ViewModels.Tasks
             Priority = previous.Priority;
             ShowToDos = false;
 
+            ToDos.Clear();
+
             foreach (ToDoViewModel todo in previous.ToDos)
             {
                 ToDos.Add(todo);
@@ -270,7 +266,7 @@ namespace TaskMate.ViewModels.Tasks
             RefreshToDos();
             OnPropertyChanged(nameof(IsOverdue));
 
-            IsInEdit = false;
+            IsNewEntry = false;
             await Task.CompletedTask;
 
             return true;
