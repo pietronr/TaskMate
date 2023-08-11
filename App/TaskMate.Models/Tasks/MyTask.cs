@@ -16,5 +16,20 @@ namespace TaskMate.Models.Tasks
         public bool IsCompleted { get; set; }
         public TaskPriority Priority { get; set; }
         public List<ToDo> ToDos { get; set; } = new List<ToDo>();
+
+        public MyTask Duplicate(List<ToDo> todos)
+        {
+            MyTask myTask = new()
+            {
+                Title = Title,
+                Description = Description,
+                IsCompleted = IsCompleted,
+                DueDate = DueDate,
+                Priority = Priority,
+                ToDos = todos,
+            };
+
+            return myTask;
+        }
     }
 }

@@ -5,6 +5,8 @@ using System.Windows.Input;
 using TaskMate.ViewModels.Helpers;
 using TaskMate.Views.Dialogs;
 using TaskMate.Models.Tasks.Enums;
+using TaskMate.Models.Tasks;
+using System.Linq;
 
 namespace TaskMate.ViewModels.Tasks
 {
@@ -89,7 +91,10 @@ namespace TaskMate.ViewModels.Tasks
         private async Task EditTask(MyTaskViewModel task)
         {
             task.IsInEdit = true;
-            CurrentTask = task;
+
+            MyTask duplicate = task.GetFullModel().Duplicate(task.ToDos.Select(x => x.Model).ToList()!);
+
+            CurrentTask = new MyTaskViewModel(duplicate);
 
             await dialogManager!.ShowDialogAsync(task, new MyTasksDialog(), false, false);
         }
