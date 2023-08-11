@@ -9,7 +9,7 @@ namespace TaskMate.Models.Settings
         public int DaysBeforeTaskNotification { get; set; }
         public bool RemindMeAtDate { get; set; }
         public int HourOfTheDate { get; set; }  
-        public NotificationType Type { get; set; }
+        public NotificationType NotificationType { get; set; }
 
         public UserSettings Duplicate()
         {
