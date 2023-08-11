@@ -47,7 +47,7 @@
                     <TextBlock Style="{StaticResource Body}" Text="Descrição:" VerticalAlignment="Center" Margin="0 0 0 0"/>
                     <TextBox Text="{Binding Description}" Width="240" Height="24"/>
                     <TextBlock Style="{StaticResource Body}" Text="Data de conclusão:" VerticalAlignment="Center" Margin="0 0 0 0"/>
-                    <DatePicker Width="240" SelectedDate="{Binding DueDate}" Height="24"/>
+                    <DatePicker Style="{StaticResource CustomDatePicker}" Width="240" SelectedDate="{Binding DueDate}" Height="24"/>
                     <TextBlock Style="{StaticResource Body}" Text="Prioridade:" VerticalAlignment="Center" Margin="0 0 0 0"/>
                     <ComboBox Width="240" ItemsSource="{Binding Source={StaticResource TaskPriorityEnum}}" SelectedItem="{Binding Priority}">
                         <ComboBox.ItemTemplate>
