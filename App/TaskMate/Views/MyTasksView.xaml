@@ -14,7 +14,7 @@
         <c:CountToVisibilityConverter x:Key="InverseCountToVisibilityConverter" ShouldBeEmpty="True"/>
     </Page.Resources>
     
-    <Border Margin="8" Padding="16 12 12 16" CornerRadius="8" DataContext="{Binding Source={StaticResource MainViewModel}, Path=MyTasks}">
+    <Border Margin="8" Padding="16 12 12 16" CornerRadius="8" DataContext="{Binding Source={StaticResource MainViewModel}}">
         <Border.Background>
             <SolidColorBrush Color="WhiteSmoke" Opacity="0.85"/>
         </Border.Background>
@@ -22,6 +22,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Margin="0 0 4 16">
                 <Grid>
@@ -30,10 +31,10 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="Minhas tarefas" Margin="0 4 0 0"/>
-                    <Button Grid.Column="1" Style="{StaticResource AffirmativeButton}" Content="Nova tarefa" Command="{Binding NewTaskCommand}"/>
+                    <Button Grid.Column="1" Style="{StaticResource AffirmativeButton}" Content="Nova tarefa" Command="{Binding MyTasks.NewTaskCommand}"/>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1" x:Name="list" DataContext="{Binding TasksList}">
+            <Grid Grid.Row="1" x:Name="list" DataContext="{Binding MyTasks.TasksList}" Margin="0 0 0 16">
                 <ItemsControl Visibility="{Binding Count, Converter={StaticResource CountToVisibilityConverter}}" ItemsSource="{Binding}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -59,6 +60,11 @@
                     <TextBlock Style="{StaticResource Body}" Text="Não há itens disponíveis. Crie uma nova tarefa." Foreground="Black" 
                                Margin="0 0 0 4" HorizontalAlignment="Center"/>
                 </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2" Margin="0 0 4 0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button Style="{StaticResource IconButton}" ToolTip="Abrir configurações" Command="{Binding UserSettings.OpenSettingsCommand}">
+                    <TextBlock Style="{StaticResource BigIcon}" Text="&#xE115;" Foreground="Black"/>
+                </Button>
             </Grid>
         </Grid>
     </Border>

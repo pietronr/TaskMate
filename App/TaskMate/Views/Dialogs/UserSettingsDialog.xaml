@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="TaskMate.Views.Dialogs.UserSettingsDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:TaskMate.ViewModels.Settings"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:enums="clr-namespace:TaskMate.Models.Settings.Enums;assembly=TaskMate.Models"
+             xmlns:c="clr-namespace:TaskMate.Converters"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             mc:Ignorable="d" d:Background="White"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="ReminderTypeEnum" MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:ReminderType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <c:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+        <c:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <c:BoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" ShowIfFalse="True"/>
+    </UserControl.Resources>
+
+    <Grid Margin="16" d:DataContext="{d:DesignInstance vm:UserSettingsViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0 0 0 16">
+            <TextBlock Style="{StaticResource Header}" Text="Definir configurações"
+                       Visibility="{Binding IsNewEntry, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <TextBlock Style="{StaticResource Header}" Text="Editar configurações"
+                       Visibility="{Binding IsNewEntry, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0 0 0 16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal"  Margin="0 0 0 8">
+                <TextBlock Style="{StaticResource Body}" Text="Receber notificações:" Margin="0 0 8 0"/>
+                <CheckBox IsChecked="{Binding ReceiveReminders}" Margin="0 4 0 0"/>
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ReceiveReminders}" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>   
+                </Grid.Style>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 0 0 8">
+                    <TextBlock Style="{StaticResource Body}" Text="Ser notificado:" Margin="0 0 4 0"/>
+                    <TextBox Style="{StaticResource SmallTextBox}" Text="{Binding DaysBeforeTaskReminder}" Width="48" Margin="0 0 4 0" />
+                    <TextBlock Style="{StaticResource Regular}" Text="dias(s) antes da data de conclusão da tarefa."/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 8">
+                    <TextBlock Style="{StaticResource Body}" Text="Ser notificado no dia:" Margin="0 0 8 0"/>
+                    <CheckBox IsChecked="{Binding RemindMeAtDate}" Margin="0 4 0 0"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 0 0 8">
+                    <TextBlock Style="{StaticResource Body}" Text="Horário da notificação:" Margin="0 0 8 0"/>
+                    <TextBox Text="{Binding Hour, StringFormat='{}{0:N0}:00'}" Width="24" />
+                    <TextBlock Style="{StaticResource Body}" Text=":" Margin="0 0 2 0"/>
+                    <TextBox Text="{Binding Minute}" Width="24" />
+                </StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource Body}" Text="Tipo de notificação:" VerticalAlignment="Center" Margin="0 0 8 0"/>
+                    <ComboBox Width="240" ItemsSource="{Binding Source={StaticResource ReminderTypeEnum}}" SelectedItem="{Binding ReminderType}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource NegativeButton}" Content="Cancelar" Margin="0 0 16 0" 
+                        Command="{Binding DialogCommand}" CommandParameter="{x:Static dialogs:MessageDialogResult.Negative}"/>
+                <Button Style="{StaticResource AffirmativeButton}" Content="Confirmar"
+                        Command="{Binding DialogCommand}" CommandParameter="{x:Static dialogs:MessageDialogResult.Affirmative}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
