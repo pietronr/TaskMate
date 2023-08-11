@@ -249,24 +249,28 @@ namespace TaskMate.ViewModels.Tasks
         {
             MyTaskViewModel previous = App.MainViewModel.MyTasks.PreviousTask!;
 
-            Title = previous.Title;
-            Description = previous.Description;
-            DueDate = previous.DueDate;
-            Priority = previous.Priority;
-            ShowToDos = false;
-
-            ToDos.Clear();
-
-            foreach (ToDoViewModel todo in previous.ToDos)
+            if (previous != null)
             {
-                ToDos.Add(todo);
+                Title = previous.Title;
+                Description = previous.Description;
+                DueDate = previous.DueDate;
+                Priority = previous.Priority;
+                ShowToDos = false;
+
+                ToDos.Clear();
+
+                foreach (ToDoViewModel todo in previous.ToDos)
+                {
+                    ToDos.Add(todo);
+                }
+    
+                IsNewEntry = false;
             }
 
             App.MainViewModel.MyTasks.TasksList?.RefreshCollection();
             RefreshToDos();
             OnPropertyChanged(nameof(IsOverdue));
 
-            IsNewEntry = false;
             await Task.CompletedTask;
 
             return true;

@@ -13,6 +13,9 @@
     <Compile Update="Views\Dialogs\MyTasksDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Dialogs\UserSettingsDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\MyTasksView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -25,6 +28,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Dialogs\MyTasksDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\UserSettingsDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MyTasksView.xaml">
