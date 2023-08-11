@@ -2,7 +2,7 @@
 
 namespace TaskMate.Models.Settings.Enums
 {
-    public enum NotificationType
+    public enum ReminderType
     {
         [Description("Simples")]
         Simple = 0,

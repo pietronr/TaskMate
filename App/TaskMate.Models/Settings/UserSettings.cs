@@ -5,21 +5,21 @@ namespace TaskMate.Models.Settings
 {
     public class UserSettings : DbObject
     {
-        public bool ReceiveNotifications { get; set; }
-        public int DaysBeforeTaskNotification { get; set; }
+        public bool ReceiveReminders { get; set; }
+        public int DaysBeforeTaskReminder { get; set; }
         public bool RemindMeAtDate { get; set; }
         public int HourOfTheDate { get; set; }  
-        public NotificationType NotificationType { get; set; }
+        public ReminderType ReminderType { get; set; }
 
         public UserSettings Duplicate()
         {
             UserSettings userSettings = new()
             {
-                ReceiveNotifications = ReceiveNotifications,
-                DaysBeforeTaskNotification = DaysBeforeTaskNotification,
+                ReceiveReminders = ReceiveReminders,
+                DaysBeforeTaskReminder = DaysBeforeTaskReminder,
                 RemindMeAtDate = RemindMeAtDate,
                 HourOfTheDate = HourOfTheDate,
-                NotificationType = NotificationType
+                ReminderType = ReminderType
             };
 
             return userSettings;
