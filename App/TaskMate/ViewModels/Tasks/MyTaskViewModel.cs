@@ -33,7 +33,7 @@ namespace TaskMate.ViewModels.Tasks
                         Close(messageDialogResult);
                     }
                 }
-                else if (messageDialogResult == MessageDialogResult.Negative)
+                else if (messageDialogResult == MessageDialogResult.Negative && await RevertTask().ConfigureAwait(false))
                 {
                     Close(messageDialogResult);
                 }
@@ -203,6 +203,11 @@ namespace TaskMate.ViewModels.Tasks
 
         #region Methods
 
+        public MyTask GetFullModel()
+        {
+            return Model!;
+        }
+
         private void AddToDo()
         {
             ToDos!.Add(CurrentToDo!);
@@ -229,6 +234,26 @@ namespace TaskMate.ViewModels.Tasks
             {
                 App.MainViewModel.MyTasks.TasksList?.Add(this);
             }
+
+            App.MainViewModel.MyTasks.TasksList?.RefreshCollection();
+            OnPropertyChanged(nameof(IsOverdue));
+
+            IsInEdit = false;
+            await Task.CompletedTask;
+
+            return true;
+        }
+
+        public async Task<bool> RevertTask()
+        {
+            MyTaskViewModel current = App.MainViewModel.MyTasks.CurrentTask!;
+
+            Title = current.Title;
+            Description = current.Description;
+            DueDate = current.DueDate;
+            Priority = current.Priority;
+            ToDos = current.ToDos;
+            ShowToDos = false;
 
             App.MainViewModel.MyTasks.TasksList?.RefreshCollection();
             OnPropertyChanged(nameof(IsOverdue));
