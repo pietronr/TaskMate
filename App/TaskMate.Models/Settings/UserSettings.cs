@@ -8,7 +8,9 @@ namespace TaskMate.Models.Settings
         public bool ReceiveReminders { get; set; }
         public int DaysBeforeTaskReminder { get; set; }
         public bool RemindMeAtDate { get; set; }
-        public int HourOfTheDate { get; set; }  
+        public int Hour { get; set; }
+        public int Minute { get; set; }
+
         public ReminderType ReminderType { get; set; }
 
         public UserSettings Duplicate()
@@ -18,7 +20,8 @@ namespace TaskMate.Models.Settings
                 ReceiveReminders = ReceiveReminders,
                 DaysBeforeTaskReminder = DaysBeforeTaskReminder,
                 RemindMeAtDate = RemindMeAtDate,
-                HourOfTheDate = HourOfTheDate,
+                Hour = Hour,
+                Minute = Minute,
                 ReminderType = ReminderType
             };
 

@@ -117,14 +117,37 @@ namespace TaskMate.ViewModels.Settings
             }
         }
 
-        public int HourOfTheDate
+        public int Hour
         {
-            get => Model!.HourOfTheDate;
+            get => Model!.Hour;
             set
             {
-                if (Model!.HourOfTheDate != value)
+                if (Model!.Hour != value)
                 {
-                    Model.HourOfTheDate = value;
+                    if (value < 0 || value > 24)
+                    {
+                        value = 0;
+                    }
+
+                    Model.Hour = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int Minute
+        {
+            get => Model!.Minute;
+            set
+            {
+                if (Model!.Minute != value)
+                {
+                    if (value < 0 || value > 60)
+                    {
+                        value = 0;
+                    }
+
+                    Model.Minute = value;
                     OnPropertyChanged();
                 }
             }
@@ -172,13 +195,18 @@ namespace TaskMate.ViewModels.Settings
         {
             UserSettingsViewModel previous = App.MainViewModel.UserSettings.PreviousSettings!;
 
-            ReceiveReminders = previous.ReceiveReminders;
-            DaysBeforeTaskReminder = previous.DaysBeforeTaskReminder;
-            RemindMeAtDate = previous.RemindMeAtDate;
-            HourOfTheDate = previous.HourOfTheDate;
-            ReminderType = previous.ReminderType;
+            if (previous != null)
+            {
+                ReceiveReminders = previous.ReceiveReminders;
+                DaysBeforeTaskReminder = previous.DaysBeforeTaskReminder;
+                RemindMeAtDate = previous.RemindMeAtDate;
+                Hour = previous.Hour;
+                Minute = previous.Minute;
+                ReminderType = previous.ReminderType;
+                
+                IsNewEntry = false;
+            }
 
-            IsNewEntry = false;
             OnPropertyChanged(null);
 
             await Task.CompletedTask;
