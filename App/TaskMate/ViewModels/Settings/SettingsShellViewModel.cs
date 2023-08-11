@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using TaskMate.Models.Settings;
+using TaskMate.Views.Dialogs;
 
 namespace TaskMate.ViewModels.Settings
 {
@@ -12,13 +13,13 @@ namespace TaskMate.ViewModels.Settings
         {
             if (initialize)
             {
+                dialogManager = new Surfaces.DialogManager();
                 OpenSettingsCommand = new AsyncRelayCommand(OpenSettings);
             }
         }
 
         public SettingsShellViewModel() : this(true)
         {
-            CurrentSettings = new UserSettingsViewModel();
         }
 
         #region Main properties
@@ -55,9 +56,10 @@ namespace TaskMate.ViewModels.Settings
             }
             else
             {
-
+                CurrentSettings = new UserSettingsViewModel();
             }
-            //await dialogManager?.ShowDialogAsync(); IMPLEMENTAR 
+            
+            await dialogManager!.ShowDialogAsync(CurrentSettings, new UserSettingsDialog(), false, false);
         }
 
         #endregion
