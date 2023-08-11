@@ -31,9 +31,9 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="0 0 0 16">
             <TextBlock Style="{StaticResource Header}" Text="Nova tarefa"
-                       Visibility="{Binding IsInEdit, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                       Visibility="{Binding IsNewEntry, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <TextBlock Style="{StaticResource Header}" Text="Editar tarefa"
-                       Visibility="{Binding IsInEdit, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                       Visibility="{Binding IsNewEntry, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
         </Grid>
         <Grid Grid.Row="1" Margin="0 0 0 16">
             <Grid.RowDefinitions>

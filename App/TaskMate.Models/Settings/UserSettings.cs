@@ -19,7 +19,7 @@ namespace TaskMate.Models.Settings
                 DaysBeforeTaskNotification = DaysBeforeTaskNotification,
                 RemindMeAtDate = RemindMeAtDate,
                 HourOfTheDate = HourOfTheDate,
-                Type = Type
+                NotificationType = NotificationType
             };
 
             return userSettings;
