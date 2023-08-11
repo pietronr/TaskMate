@@ -8,6 +8,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -460,6 +461,135 @@
                 </Style.Triggers>
             </Style>
 
+            <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+                <Grid Height="24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="22" />
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="Border" Grid.ColumnSpan="2" BorderBrush="Gray" Background="White" CornerRadius="2" BorderThickness="1"/>
+                    <Border Grid.Column="0" Background="Transparent"/>
+                </Grid>
+            </ControlTemplate>
+            
+            <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+                <Border x:Name="PART_ContentHost" Focusable="False" Background="White" BorderThickness="1" BorderBrush="Gray" />
+            </ControlTemplate>
+            
+            <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}">
+                <Setter Property="SnapsToDevicePixels" Value="true"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+                <Setter Property="Height" Value="32"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ComboBox}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton x:Name="ToggleButton" Template="{StaticResource ComboBoxToggleButton}" Grid.ColumnSpan="3" Background="{TemplateBinding Background}"
+                                              Focusable="false"  ClickMode="Release" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, 
+                                              RelativeSource={RelativeSource TemplatedParent}}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                                <Border x:Name="Border" BorderThickness="2" BorderBrush="Transparent" CornerRadius="2" SnapsToDevicePixels="True" Grid.ColumnSpan="3"/>
+                                <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  Margin="10 7 10 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Opacity="1"/>
+                                <TextBlock x:Name="Arrow" Foreground="Gray" Text="&#xE70D;" FontFamily="Segoe MDL2 Assets" IsHitTestVisible="False" Visibility="Visible"
+                                            HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="12" TextOptions.TextFormattingMode="Ideal" Margin="0 0 10 0" Grid.Column="2"/>
+                                <Popup x:Name="PART_Popup" Placement="Bottom" AllowsTransparency="True" StaysOpen="True"
+                                       Focusable="False" PopupAnimation="Fade" IsOpen="{TemplateBinding IsDropDownOpen}" HorizontalOffset="-4" VerticalOffset="-2">
+                                    <Grid x:Name="DropDown" SnapsToDevicePixels="True" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                        <Border x:Name="DropDownBorder" CornerRadius="8" BorderThickness="0 0 2 0" Margin="4">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="LightGray"/>
+                                            </Border.Background>
+                                            <ScrollViewer Padding="1 5 0 3" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" VerticalScrollBarVisibility="Visible">
+                                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Grid>
+                                </Popup>
+                                <TextBox x:Name="PART_EditableTextBox" Style="{x:Null}" Template="{StaticResource ComboBoxTextBox}" 
+                                         HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 2 23 1" Focusable="True" Background="Transparent"
+                                         Visibility="Hidden" IsReadOnly="{TemplateBinding IsReadOnly}" FontSize="{TemplateBinding FontSize}"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="HasItems" Value="false">
+                                    <Setter TargetName="DropDownBorder" Property="MinHeight" Value="35" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="ContentSite" Property="Opacity" Value="0.25" />
+                                    <Setter TargetName="Arrow" Property="Opacity" Value="0.5" />
+                                </Trigger>
+                                <Trigger Property="IsEditable" Value="True">
+                                    <Setter TargetName="PART_Popup" Property="Popup.Placement" Value="Bottom"/>
+                                    <Setter TargetName="DropDownBorder" Property="Margin" Value="0"/>
+                                    <Setter TargetName="DropDownBorder" Property="Background" Value="White"/>
+                                </Trigger>
+                                <Trigger Property="IsGrouping" Value="true">
+                                    <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                                </Trigger>
+                                <Trigger SourceName="PART_Popup" Property="AllowsTransparency" Value="true">
+                                    <Setter TargetName="DropDownBorder" Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="4" Opacity="0.30" BlurRadius="12"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="Padding" Value="12 4" />
+                <Setter Property="Height" Value="24"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                            <Grid Margin="3 0 3 0">
+                                <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent"/>
+                                <Border x:Name="HoverBackground" Background="Gray" Margin="0 2"
+                                        Opacity="0.4" Visibility="Collapsed" CornerRadius="4" Padding="{TemplateBinding Padding}"/>
+                                <Border x:Name="SelectedBackground" Background="LightBlue" Opacity="1" Visibility="Collapsed"
+                                        CornerRadius="1.5" HorizontalAlignment="Left" Width="3" Height="16" VerticalAlignment="Center"/>
+                                <ContentPresenter Margin="8 0 12 1" VerticalAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="HoverBackground" Property="Visibility" Value="Visible"/>
+                                    <Setter TargetName="HoverBackground" Property="Opacity" Value="0.15"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="HoverBackground" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="True"/>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="HoverBackground" Property="Opacity" Value="0.27"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
