@@ -79,7 +79,7 @@
                                 <StackPanel Orientation="Horizontal" Height="24">
                                     <StackPanel Orientation="Horizontal" Width="250" Margin="0 0 4 0"> 
                                         <Ellipse Width="8" Height="8" Fill="Gray" Margin="0 -4 4 0"/>
-                                        <TextBlock Style="{StaticResource Metadata}" Text="{Binding Description}" Foreground="Gray"/>
+                                        <TextBlock Style="{StaticResource Metadata}" Text="{Binding Description}" Foreground="Gray" Margin="0 1 0 0"/>
                                     </StackPanel>
                                     <Button Style="{StaticResource IconButton}" 
                                             Command="{Binding Source={StaticResource MainViewModel}, Path=MyTasks.CurrentTask.RemoveToDoCommand}" CommandParameter="{Binding}">
