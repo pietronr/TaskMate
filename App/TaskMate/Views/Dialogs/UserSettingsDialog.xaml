@@ -72,9 +72,9 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 0 0 8">
                     <TextBlock Style="{StaticResource Body}" Text="Horário da notificação:" Margin="0 0 8 0"/>
-                    <TextBox Text="{Binding Hour, StringFormat='{}{0:N0}:00'}" Width="24" />
+                    <TextBox Text="{Binding Hour}" Width="30" />
                     <TextBlock Style="{StaticResource Body}" Text=":" Margin="0 0 2 0"/>
-                    <TextBox Text="{Binding Minute}" Width="24" />
+                    <TextBox Text="{Binding Minute}" Width="30" />
                 </StackPanel>
                 <StackPanel Grid.Row="3" Orientation="Horizontal">
                     <TextBlock Style="{StaticResource Body}" Text="Tipo de notificação:" VerticalAlignment="Center" Margin="0 0 8 0"/>

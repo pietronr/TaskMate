@@ -91,7 +91,7 @@ namespace TaskMate.ViewModels.Settings
             }
         }
 
-        public int DaysBeforeTaskReminder
+        public int? DaysBeforeTaskReminder
         {
             get => Model!.DaysBeforeTaskReminder;
             set
@@ -117,7 +117,7 @@ namespace TaskMate.ViewModels.Settings
             }
         }
 
-        public int Hour
+        public int? Hour
         {
             get => Model!.Hour;
             set
@@ -135,7 +135,7 @@ namespace TaskMate.ViewModels.Settings
             }
         }
 
-        public int Minute
+        public int? Minute
         {
             get => Model!.Minute;
             set
@@ -153,7 +153,7 @@ namespace TaskMate.ViewModels.Settings
             }
         }
 
-        public ReminderType ReminderType
+        public ReminderType? ReminderType
         {
             get => Model!.ReminderType;
             set
@@ -175,6 +175,15 @@ namespace TaskMate.ViewModels.Settings
             return Model!;
         }
 
+        private void ClearValues()
+        {
+            DaysBeforeTaskReminder = null;
+            Hour = null;
+            Minute = null;
+            ReminderType = null;
+            RemindMeAtDate = false;
+        }
+
         public void Close(MessageDialogResult result)
         {
             _tcs!.SetResult(result);
@@ -183,7 +192,11 @@ namespace TaskMate.ViewModels.Settings
 
         public async Task<bool> SaveAsync()
         {
-            App.MainViewModel.UserSettings.CurrentSettings = this;
+            if (!ReceiveReminders)
+                ClearValues();
+
+            IsNewEntry = false;
+
             OnPropertyChanged(null);
 
             await Task.CompletedTask;
