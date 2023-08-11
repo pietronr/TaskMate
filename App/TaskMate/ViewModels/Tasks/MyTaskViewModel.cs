@@ -10,7 +10,7 @@ using TaskMate.ViewModels.Helpers;
 
 namespace TaskMate.ViewModels.Tasks
 {
-    public class MyTaskViewModel : BindableBase, IDialogViewModel<MessageDialogResult>
+    public class MyTaskViewModel : BindableBase, IDialogViewModel<MessageDialogResult>, IDatabasePersist
     {
         #region IDialogViewModel members
 
@@ -28,12 +28,12 @@ namespace TaskMate.ViewModels.Tasks
 
                 if (messageDialogResult == MessageDialogResult.Affirmative)
                 {
-                    if (await SaveTask().ConfigureAwait(false))
+                    if (await SaveAsync().ConfigureAwait(false))
                     {
                         Close(messageDialogResult);
                     }
                 }
-                else if (messageDialogResult == MessageDialogResult.Negative && await RevertTask().ConfigureAwait(false))
+                else if (messageDialogResult == MessageDialogResult.Negative && await RevertChangesAsync().ConfigureAwait(false))
                 {
                     Close(messageDialogResult);
                 }
@@ -233,7 +233,7 @@ namespace TaskMate.ViewModels.Tasks
             Closed?.Invoke(this, EventArgs.Empty);
         }
 
-        public async Task<bool> SaveTask()
+        public async Task<bool> SaveAsync()
         {
             if (IsInEdit == false)
             {
@@ -251,7 +251,7 @@ namespace TaskMate.ViewModels.Tasks
             return true;
         }
 
-        public async Task<bool> RevertTask()
+        public async Task<bool> RevertChangesAsync()
         {
             MyTaskViewModel previous = App.MainViewModel.MyTasks.PreviousTask!;
 
