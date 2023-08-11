@@ -1,9 +1,10 @@
 ﻿using TaskMate.Models.Common;
+using TaskMate.Models.Interfaces;
 using TaskMate.Models.Tasks.Enums;
 
 namespace TaskMate.Models.Tasks
 {
-    public class MyTask : DbObject
+    public class MyTask : DbObject, ITask
     {
         public MyTask()
         {

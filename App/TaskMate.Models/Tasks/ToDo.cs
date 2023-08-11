@@ -1,8 +1,9 @@
 ﻿using TaskMate.Models.Common;
+using TaskMate.Models.Interfaces;
 
 namespace TaskMate.Models.Tasks
 {
-    public class ToDo : DbObject
+    public class ToDo : DbObject, ITask
     {
         public ToDo(string? description)
         {
