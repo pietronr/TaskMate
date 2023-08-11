@@ -222,6 +222,11 @@ namespace TaskMate.ViewModels.Tasks
             ToDos!.RefreshCollection();
         }
 
+        public void RefreshToDos()
+        {
+            ToDos?.RefreshCollection();
+        }
+
         public void Close(MessageDialogResult result)
         {
             _tcs!.SetResult(result);
@@ -238,6 +243,8 @@ namespace TaskMate.ViewModels.Tasks
             App.MainViewModel.MyTasks.TasksList?.RefreshCollection();
             OnPropertyChanged(nameof(IsOverdue));
 
+            if (IsInEdit == true && ToDos.Count == 0) ShowToDos = false;
+
             IsInEdit = false;
             await Task.CompletedTask;
 
@@ -246,16 +253,21 @@ namespace TaskMate.ViewModels.Tasks
 
         public async Task<bool> RevertTask()
         {
-            MyTaskViewModel current = App.MainViewModel.MyTasks.CurrentTask!;
+            MyTaskViewModel previous = App.MainViewModel.MyTasks.PreviousTask!;
 
-            Title = current.Title;
-            Description = current.Description;
-            DueDate = current.DueDate;
-            Priority = current.Priority;
-            ToDos = current.ToDos;
+            Title = previous.Title;
+            Description = previous.Description;
+            DueDate = previous.DueDate;
+            Priority = previous.Priority;
             ShowToDos = false;
 
+            foreach (ToDoViewModel todo in previous.ToDos)
+            {
+                ToDos.Add(todo);
+            }
+
             App.MainViewModel.MyTasks.TasksList?.RefreshCollection();
+            RefreshToDos();
             OnPropertyChanged(nameof(IsOverdue));
 
             IsInEdit = false;

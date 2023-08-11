@@ -58,6 +58,13 @@ namespace TaskMate.ViewModels.Tasks
             set => Set(ref _currentTask, value);
         }
 
+        private MyTaskViewModel? _previousTask;
+        public MyTaskViewModel? PreviousTask
+        {
+            get => _previousTask;
+            set => Set(ref _previousTask, value);
+        } 
+
         #endregion
 
         #region Commands
@@ -91,10 +98,10 @@ namespace TaskMate.ViewModels.Tasks
         private async Task EditTask(MyTaskViewModel task)
         {
             task.IsInEdit = true;
+            CurrentTask = task;
 
             MyTask duplicate = task.GetFullModel().Duplicate(task.ToDos.Select(x => x.Model).ToList()!);
-
-            CurrentTask = new MyTaskViewModel(duplicate);
+            PreviousTask = new MyTaskViewModel(duplicate);
 
             await dialogManager!.ShowDialogAsync(task, new MyTasksDialog(), false, false);
         }
