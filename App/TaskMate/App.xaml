@@ -414,6 +414,127 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="SmallTextBox" TargetType="{x:Type TextBox}">
+                <Setter Property="Background" Value="White" />
+                <Setter Property="BorderBrush" Value="Gray" />
+                <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
+                <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="Gray" />
+                <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="Gray" />
+                <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
+                <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="14" />
+                <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
+                <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
+                <Setter Property="Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled" Value="{Binding RelativeSource={RelativeSource Self}, Path=(SpellCheck.IsEnabled)}" />
+                <Setter Property="Controls:TextBoxHelper.WatermarkWrapping" Value="{Binding RelativeSource={RelativeSource Self}, Path=TextWrapping, Mode=OneWay}" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Height" Value="20" />
+                <Setter Property="Padding" Value="3 0 3 0" />
+                <Setter Property="SelectionBrush" Value="Gray" />
+                <Setter Property="SelectionOpacity" Value="0.4"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Grid>
+                                <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
+                                    <Border x:Name="PART_WaitingForDataEffectGrid"
+                                            Background="White"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </AdornerDecorator>
+                                <Border x:Name="Base" CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                        Background="White"
+                                        BorderBrush="Gray"
+                                        BorderThickness="1"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <Grid x:Name="PART_InnerGrid" Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  Width="Auto" />
+                                        <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                        <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                                        <ColumnDefinition  Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition x:Name="ButtonRow" Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                          Grid.Row="1"
+                                          Grid.Column="1"
+                                          Margin="2 0"
+                                          VerticalAlignment="Stretch"
+                                          BorderThickness="0"
+                                          IsTabStop="False" />
+                                    <TextBlock x:Name="PART_Message"
+                                       Grid.Row="1"
+                                       Grid.Column="1"
+                                       Margin="3 0 3 0"
+                                       Padding="{TemplateBinding Padding}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
+                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                       TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                       TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                       TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
+                                       Visibility="Collapsed" />
+                                </Grid>
+                                <Border x:Name="DisabledVisualElement"
+                                        Background="White"
+                                        BorderBrush="Gray"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0" CornerRadius="3"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsAlignment)}" Value="Left">
+                                    <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
+                                    <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
+                                    <Setter TargetName="PART_Message" Property="Grid.Column" Value="1" />
+                                    <Setter TargetName="TextColumn" Property="Width" Value="Auto" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value="">
+                                    <Setter TargetName="PART_Message" Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsAlignment)}" Value="Right" />
+                                        <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter TargetName="PART_ContentHost" Property="Grid.ColumnSpan" Value="2" />
+                                    <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
+                                </MultiDataTrigger>
+
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Base" Property="BorderBrush" Value="Gray" />
+                                    <Setter TargetName="Base" Property="Background" Value="White" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.7" />
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="Base" Property="BorderBrush" 
+                                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                                    <Setter TargetName="Base" Property="Background" Value="White" />
+                                    <Setter TargetName="Base" Property="BorderThickness" Value="1"/>
+                                </Trigger>
+                                <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
+                                    <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
                 <Setter Property="SnapsToDevicePixels" Value="true" />
                 <Setter Property="OverridesDefaultStyle" Value="true" />
