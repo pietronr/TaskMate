@@ -2,7 +2,7 @@
 {
     public interface ITask
     {
-        string Description { get; set; }
+        string? Description { get; set; }
         bool IsCompleted { get; set; } 
     }
 }
