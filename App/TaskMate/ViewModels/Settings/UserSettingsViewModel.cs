@@ -117,37 +117,19 @@ namespace TaskMate.ViewModels.Settings
             }
         }
 
-        public int? Hour
+        public int? TimeForReminderOccurence
         {
-            get => Model!.Hour;
+            get => Model!.TimeForReminderOccurence;
             set
             {
-                if (Model!.Hour != value)
+                if (Model!.TimeForReminderOccurence != value)
                 {
                     if (value < 0 || value > 24)
                     {
                         value = 0;
                     }
 
-                    Model.Hour = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int? Minute
-        {
-            get => Model!.Minute;
-            set
-            {
-                if (Model!.Minute != value)
-                {
-                    if (value < 0 || value > 60)
-                    {
-                        value = 0;
-                    }
-
-                    Model.Minute = value;
+                    Model.TimeForReminderOccurence = value;
                     OnPropertyChanged();
                 }
             }
@@ -166,6 +148,19 @@ namespace TaskMate.ViewModels.Settings
             }
         }
 
+        public ReminderOccurence? ReminderOccurence
+        {
+            get => Model!.ReminderOccurence;
+            set
+            {
+                if (Model!.ReminderOccurence != value)
+                {
+                    Model.ReminderOccurence = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -178,9 +173,9 @@ namespace TaskMate.ViewModels.Settings
         private void ClearValues()
         {
             DaysBeforeTaskReminder = null;
-            Hour = null;
-            Minute = null;
+            TimeForReminderOccurence = null;
             ReminderType = null;
+            ReminderOccurence = null;
             RemindMeAtDate = false;
         }
 
@@ -213,9 +208,9 @@ namespace TaskMate.ViewModels.Settings
                 ReceiveReminders = previous.ReceiveReminders;
                 DaysBeforeTaskReminder = previous.DaysBeforeTaskReminder;
                 RemindMeAtDate = previous.RemindMeAtDate;
-                Hour = previous.Hour;
-                Minute = previous.Minute;
+                TimeForReminderOccurence = previous.TimeForReminderOccurence;
                 ReminderType = previous.ReminderType;
+                ReminderOccurence = previous.ReminderOccurence;
                 
                 IsNewEntry = false;
             }
