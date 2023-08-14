@@ -546,6 +546,53 @@
                         <ControlTemplate TargetType="{x:Type CheckBox}">
                             <BulletDecorator Background="Transparent">
                                 <BulletDecorator.Bullet>
+                                    <Border x:Name="Border" Width="17" Height="17" Background="Transparent" UseLayoutRounding="True" VerticalAlignment="Top"
+                                            BorderThickness="1" BorderBrush="Gray" CornerRadius="2" SnapsToDevicePixels="True">
+                                        <Grid Margin="-2" x:Name="Painel">
+                                            <TextBlock x:Name="CheckMark" Visibility="Collapsed" FontFamily="Segoe MDL2 Assets" Text="&#xE73E;" 
+                                                        FontSize="13" Foreground="Black" TextOptions.TextRenderingMode="Aliased" Margin="4" SnapsToDevicePixels="True" UseLayoutRounding="True"/>
+                                            <Rectangle x:Name="Indeterminate" Visibility="Collapsed" Width="7" Height="7" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                       Fill="White" TextOptions.TextRenderingMode="Aliased" Margin="4" SnapsToDevicePixels="True" UseLayoutRounding="True"/>
+                                            <Border x:Name="BorderIn" BorderThickness="1" BorderBrush="Black" Visibility="Collapsed" />
+                                        </Grid>
+                                    </Border>
+                                </BulletDecorator.Bullet>
+                                <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                  RecognizesAccessKey="True"/>
+                            </BulletDecorator>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="LightBlue"/>
+                                    <Setter TargetName="Border" Property="BorderThickness" Value="0"/>
+                                    <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="{x:Null}">
+                                    <Setter TargetName="Border" Property="Background" Value="LightBlue"/>
+                                    <Setter TargetName="Border" Property="BorderThickness" Value="0"/>
+                                    <Setter TargetName="Indeterminate" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.6"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="SmallCheckBox" TargetType="{x:Type CheckBox}">
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type CheckBox}">
+                            <BulletDecorator Background="Transparent">
+                                <BulletDecorator.Bullet>
                                     <Border x:Name="Border" Width="13" Height="13" Background="Transparent" UseLayoutRounding="True" VerticalAlignment="Top"
                                             BorderThickness="1" BorderBrush="Gray" CornerRadius="2" SnapsToDevicePixels="True">
                                         <Grid Margin="-2" x:Name="Painel">
@@ -581,6 +628,7 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+
 
             <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
                 <Grid Height="24">

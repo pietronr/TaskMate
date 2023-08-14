@@ -48,7 +48,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal"  Margin="0 0 0 8">
                 <TextBlock Style="{StaticResource Body}" Text="Receber notificações:" Margin="0 0 8 0"/>
-                <CheckBox IsChecked="{Binding ReceiveReminders}" Margin="0 4 0 0"/>
+                <CheckBox IsChecked="{Binding ReceiveReminders}" Margin="0 2 0 0"/>
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -74,7 +74,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 8">
                     <TextBlock Style="{StaticResource Body}" Text="Ser notificado no dia:" Margin="0 0 8 0"/>
-                    <CheckBox IsChecked="{Binding RemindMeAtDate}" Margin="0 4 0 0"/>
+                    <CheckBox IsChecked="{Binding RemindMeAtDate}" Margin="0 2 0 0"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 0 0 8">
                     <TextBlock Style="{StaticResource Body}" Text="Ocorrência da notificação:" Margin="0 0 8 0" VerticalAlignment="Center"/>

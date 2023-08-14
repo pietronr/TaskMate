@@ -204,7 +204,7 @@
                                     <StackPanel Orientation="Horizontal" Height="24">
                                         <Ellipse Width="8" Height="8" Fill="Gray" Margin="0 -4 4 0"/>
                                         <TextBlock Style="{StaticResource Metadata}" Text="{Binding Description}" Foreground="Gray" Margin="0 1 4 0"/>
-                                        <CheckBox Height="16" IsChecked="{Binding IsCompleted}"/>
+                                        <CheckBox Style="{StaticResource SmallCheckBox}" Height="16" IsChecked="{Binding IsCompleted}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
