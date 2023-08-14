@@ -16,6 +16,7 @@ namespace TaskMate.Models.Tasks
         public DateTime DueDate { get; set; }  
         public bool IsCompleted { get; set; }
         public TaskPriority Priority { get; set; }
+        public bool IsRecurrent { get; set; }
         public List<ToDo> ToDos { get; set; } = new List<ToDo>();
 
         public MyTask Duplicate(List<ToDo> todos)
@@ -27,6 +28,7 @@ namespace TaskMate.Models.Tasks
                 IsCompleted = IsCompleted,
                 DueDate = DueDate,
                 Priority = Priority,
+                IsRecurrent = IsRecurrent,
                 ToDos = todos,
             };
 

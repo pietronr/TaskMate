@@ -163,6 +163,19 @@ namespace TaskMate.ViewModels.Tasks
             }
         }
 
+        public bool IsRecurrent
+        {
+            get => Model!.IsRecurrent;
+            set
+            {
+                if (Model!.IsRecurrent != value)
+                {
+                    Model!.IsRecurrent = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         #region View properties
@@ -255,6 +268,7 @@ namespace TaskMate.ViewModels.Tasks
                 Description = previous.Description;
                 DueDate = previous.DueDate;
                 Priority = previous.Priority;
+                IsRecurrent = previous.IsRecurrent;
                 ShowToDos = false;
 
                 ToDos.Clear();

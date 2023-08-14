@@ -40,7 +40,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Margin="0 0 0 8">
+            <StackPanel Grid.Row="0" Margin="0 0 0 24">
                 <UniformGrid Rows="4" Columns="2" Width="500" HorizontalAlignment="Left">
                     <TextBlock Style="{StaticResource Body}" Text="Título:" VerticalAlignment="Center" Margin="0 0 0 8"/>
                     <TextBox Text="{Binding Title}" Width="240" Height="24"/>
@@ -56,6 +56,12 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    <TextBlock Style="{StaticResource Body}" Text="É recorrente:"/>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsRecurrent}" Margin="4 2 0 0"/>
+                        <TextBlock Style="{StaticResource RegularIcon}" Text="&#xE946;" VerticalAlignment="Center" Foreground="Blue" Margin="0 -2 0 0"
+                                   Visibility="{Binding IsRecurrent, Converter={StaticResource BoolToVisibilityConverter}}" ToolTip="Ocorrerá de 7 em 7 dias."/>
+                    </StackPanel>
                 </UniformGrid>
             </StackPanel>
             <Grid Grid.Row="1">
